@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือจ่ายยาสมุนไพร 32 รายการ ตาม Course การรักษา (E-Claim รพ.สต.)</title>
+    <style>
+        /* ==========================================================================
+           1. CSS Variables & Base Styles (Standalone Offline Styling)
+           ========================================================================== */
+        :root {
+            --primary: #14532d;
+            --primary-mid: #166534;
+            --primary-light: #dcfce7;
+            --primary-soft: #f0fdf4;
+            --primary-border: #bbf7d0;
+            --secondary: #0f766e;
+            --accent: #d97706;
+            --accent-light: #fef3c7;
+            --accent-border: #fde68a;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-border: #fecaca;
+            --bg-body: #f3f6f4;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.14);
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --font-sans: "Sarabun", -apple-system, BlinkMacSystemFont, "Prompt", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 48px;
+        }
+
+        /* ==========================================================================
+           2. Header & Search Controls
+           ========================================================================== */
+        header {
+            background: linear-gradient(135deg, #052e16 0%, var(--primary) 55%, var(--primary-mid) 100%);
+            color: #ffffff;
+            padding: 18px 16px 22px;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1360px;
+            margin: 0 auto;
+        }
+
+        .header-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+
+        .brand-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+            font-size: 0.8rem;
+        }
+
+        .meta-pill {
+            background: rgba(255, 255, 255, 0.14);
+            padding: 2px 10px;
+            border-radius: 999px;
+            color: #ecfdf5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn-header {
+            background-color: #ffffff;
+            color: var(--primary);
+            border: none;
+            padding: 9px 14px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: all 0.15s ease;
+        }
+
+        .btn-header:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-header.secondary {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: none;
+        }
+
+        .btn-header.secondary:hover,
+        .btn-header.secondary.active-view {
+            background-color: #ffffff;
+            color: var(--primary);
+        }
+
+        /* ปุ่มเฉพาะ รพ.สต.บ้านจัวเหนือ */
+        .btn-header.banjua {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            color: #78350f;
+            border: 1px solid #f59e0b;
+        }
+
+        .btn-header.banjua:hover {
+            background: #fcd34d;
+            color: #451a03;
+        }
+
+        .btn-header.banjua.active-banjua {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            color: #ffffff;
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.45);
+        }
+
+        /* แถบแจ้งเตือนโหมด รพ.สต.บ้านจัวเหนือ */
+        .banjua-banner {
+            display: none;
+            background: linear-gradient(to right, #fffbeb, #fef3c7);
+            border: 1px solid #f59e0b;
+            border-left: 5px solid #d97706;
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .banjua-banner.active {
+            display: flex;
+        }
+
+        .banjua-badge {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-manage-banjua {
+            background-color: #b45309;
+            color: #ffffff;
+            border: none;
+            padding: 7px 13px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-manage-banjua:hover {
+            background-color: #92400e;
+        }
+
+        .banjua-checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 8px;
+            padding: 16px 20px;
+        }
+
+        .banjua-check-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: #f8fafc;
+            cursor: pointer;
+            font-size: 0.88rem;
+            user-select: none;
+        }
+
+        .banjua-check-item:hover {
+            background: #fffbeb;
+            border-color: #fcd34d;
+        }
+
+        .banjua-check-item input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            accent-color: #d97706;
+            cursor: pointer;
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            position: relative;
+            max-width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 44px 12px 44px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            font-family: inherit;
+            font-size: 0.98rem;
+            color: var(--text-main);
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #4ade80;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e2e8f0;
+            color: var(--text-muted);
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .clear-search.visible {
+            display: flex;
+        }
+
+        /* ==========================================================================
+           3. Main Container & 10 Disease Group Filter Pills
+           ========================================================================== */
+        .main-container {
+            max-width: 1360px;
+            margin: 18px auto 0;
+            padding: 0 16px;
+        }
+
+        .filter-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .result-count {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            background: #f1f5f9;
+            padding: 3px 10px;
+            border-radius: 999px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .tab-btn {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--primary-mid);
+            color: var(--primary);
+            background-color: var(--primary-soft);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(20, 83, 45, 0.25);
+        }
+
+        /* ==========================================================================
+           4. Herb Cards Grid (32 Items)
+           ========================================================================== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+            gap: 18px;
+        }
+
+        @media (max-width: 440px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .herb-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .herb-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Card Header */
+        .card-header {
+            background: linear-gradient(to right, var(--primary-soft), #ffffff);
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--primary-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+        }
+
+        .herb-no-badge {
+            background-color: var(--primary);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 2px 9px;
+            border-radius: 6px;
+        }
+
+        .group-tag {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.74rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .herb-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+
+        .herb-replaces {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .course-rate-badge {
+            background-color: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            color: var(--primary);
+            padding: 6px 10px;
+            border-radius: 10px;
+            text-align: right;
+            flex-shrink: 0;
+            min-width: 96px;
+        }
+
+        .course-rate-badge span {
+            display: block;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .course-rate-badge strong {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        /* Sub-variants Table inside Card (for items with multiple forms/formulas) */
+        .variants-box {
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        .variants-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+
+        .variants-table th {
+            background-color: #e2e8f0;
+            color: var(--text-main);
+            font-weight: 700;
+            padding: 6px 8px;
+            text-align: left;
+            font-size: 0.76rem;
+            position: static;
+        }
+
+        .variants-table td {
+            padding: 7px 8px;
+            border-top: 1px solid #e2e8f0;
+            vertical-align: middle;
+            background-color: #ffffff;
+        }
+
+        .variants-table tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        .rate-pill {
+            display: inline-block;
+            background-color: var(--primary-soft);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .cycle-pill {
+            display: inline-block;
+            background-color: var(--accent-light);
+            color: #92400e;
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        /* Unit Converter / Course Calculator */
+        .converter-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .converter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .converter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .conv-select,
+        .conv-input {
+            padding: 5px 8px;
+            border: 1px solid #94a3b8;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 600;
+            background-color: #ffffff;
+            color: var(--text-main);
+        }
+
+        .conv-select {
+            max-width: 185px;
+        }
+
+        .conv-input {
+            width: 78px;
+            text-align: center;
+        }
+
+        .conv-result {
+            font-size: 0.84rem;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            padding: 7px 10px;
+            color: var(--text-main);
+        }
+
+        .conv-result.status-ok {
+            border-color: #4ade80;
+            background-color: #ecfdf5;
+            color: #065f46;
+        }
+
+        .conv-result.status-warn {
+            border-color: #f87171;
+            background-color: var(--danger-light);
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        /* Clinical Info */
+        .info-block {
+            font-size: 0.88rem;
+        }
+
+        .info-label {
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 2px;
+            font-size: 0.83rem;
+        }
+
+        .info-text {
+            color: var(--text-muted);
+        }
+
+        .warning-box {
+            background-color: var(--danger-light);
+            border: 1px solid var(--danger-border);
+            border-left: 4px solid var(--danger);
+            border-radius: 8px;
+            padding: 8px 11px;
+            font-size: 0.83rem;
+            color: #991b1b;
+        }
+
+        .warning-title {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 2px;
+            color: var(--danger);
+        }
+
+        /* ICD Codes Section */
+        .icd-section {
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .icd-group {
+            margin-bottom: 6px;
+        }
+
+        .icd-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .icd-group-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .icd-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .icd-chip {
+            font-family: monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.12s;
+            user-select: none;
+        }
+
+        .icd-chip.tm {
+            background-color: #ecfdf5;
+            color: #065f46;
+            border-color: #a7f3d0;
+        }
+
+        .icd-chip.tm:hover {
+            background-color: #059669;
+            color: #ffffff;
+        }
+
+        .icd-chip.modern {
+            background-color: #eff6ff;
+            color: #1e40af;
+            border-color: #bfdbfe;
+        }
+
+        .icd-chip.modern:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           5. Quick Reference Table View (32 Items Summary Table)
+           ========================================================================== */
+        .table-view-container {
+            display: none;
+            background-color: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+
+        .table-view-container.active {
+            display: block;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            min-width: 900px;
+        }
+
+        .summary-table th {
+            background-color: var(--primary);
+            color: #ffffff;
+            font-weight: 700;
+            text-align: left;
+            padding: 12px 14px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .summary-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .summary-table tr:hover td {
+            background-color: var(--primary-soft);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px dashed #cbd5e1;
+            display: none;
+        }
+
+        .empty-state.visible {
+            display: block;
+        }
+
+        /* ==========================================================================
+           6. Modal for 10 Disease Groups Table
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(2px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 999;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 1140px;
+            max-height: 90vh;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.08rem;
+            font-weight: 700;
+        }
+
+        .btn-close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-close-modal:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .modal-toolbar {
+            padding: 12px 20px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-search {
+            padding: 8px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .modal-body {
+            padding: 0;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            min-width: 780px;
+        }
+
+        .modal-table th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 2px solid var(--primary-border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .modal-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        /* ==========================================================================
+           7. Toast Notification & Footer
+           ========================================================================== */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transition: all 0.25s ease;
+            z-index: 2000;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 0.82rem;
+            color: var(--text-light);
+            padding: 0 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Smart Search -->
+    <header>
+        <div class="header-container">
+            <div class="header-top">
+                <div class="brand">
+                    <div class="brand-icon" aria-hidden="true">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1>คู่มือจ่ายยาสมุนไพร 32 รายการ ตาม Course การรักษา (E-Claim รพ.สต.)</h1>
+                        <div class="brand-meta">
+                            <span class="meta-pill">บันทึกข้อมูลและประมวลผลผ่านระบบ E-Claim</span>
+                            <span class="meta-pill">จ่ายชดเชยเดือนละ 2 ครั้ง</span>
+                            <span class="meta-pill">อ้างอิง สปสช. ประกาศ 10 เม.ย. 2568 (เริ่ม 1 มี.ค. 68)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button type="button" class="btn-header banjua" id="btnBanJuaNuea" title="แสดงเฉพาะรายการยาสมุนไพรของ รพ.สต.บ้านจัวเหนือ">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        รพ.สต.บ้านจัวเหนือ (<span id="banJuaCountBadge">11</span>)
+                    </button>
+                    <button type="button" class="btn-header secondary active-view" id="btnViewCards" title="แสดงแบบการ์ดพร้อมเครื่องคำนวณ">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        มุมมองการ์ด (32)
+                    </button>
+                    <button type="button" class="btn-header secondary" id="btnViewTable" title="สลับดูตารางเปรียบเทียบ 32 รายการแบบย่อ">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        ตารางรวม 32 รายการ
+                    </button>
+                    <button type="button" class="btn-header" id="openRefModalBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                        </svg>
+                        ตารางสรุป 10 กลุ่มโรค & ICD
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-wrapper">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="smartSearch" class="search-input" placeholder="ค้นหาชื่อยา, ลำดับ 1-32, กลุ่มอาการ, ยาแผนปัจจุบัน (เช่น Omeprazole, NSAIDs), รหัส ICD-10 / ICD-10-TM..." autocomplete="off">
+                <button type="button" id="clearSearchBtn" class="clear-search" title="ล้างคำค้นหา">✕</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- แถบสถานะโหมด รพ.สต.บ้านจัวเหนือ -->
+        <section class="banjua-banner" id="banJuaBanner" aria-label="ข้อมูลรายการยา รพ.สต.บ้านจัวเหนือ">
+            <div>
+                <div style="font-weight: 700; color: #78350f; font-size: 0.98rem; display: flex; align-items: center; gap: 6px;">
+                    🏥 กำลังแสดงรายการยาสมุนไพรในบัญชีของ รพ.สต.บ้านจัวเหนือ
+                </div>
+                <div style="font-size: 0.83rem; color: #92400e; margin-top: 2px;">
+                    สามารถปรับแต่งติ๊กเลือก/เพิ่ม-ลดรายการยาที่มีให้บริการจริงใน รพ.สต.บ้านจัวเหนือ ได้ตลอดเวลา (ระบบบันทึกอัตโนมัติ)
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn-manage-banjua" id="openBanJuaConfigBtn">⚙️ ตั้งค่ารายการยา รพ.สต.บ้านจัวเหนือ</button>
+                <button type="button" class="tab-btn" id="exitBanJuaBtn" style="background:#ffffff;">แสดงครบทั้ง 32 รายการ</button>
+            </div>
+        </section>
+
+        <!-- 10 Disease Group Filter Pills -->
+        <section class="filter-section" aria-label="ตัวกรองตาม 10 กลุ่มอาการ">
+            <div class="filter-header-row">
+                <div class="filter-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    </svg>
+                    กรองตามกลุ่มโรคที่พบบ่อย 10 กลุ่มอาการ (Common Diseases and Symptoms)
+                </div>
+                <div class="result-count" id="resultCount">แสดง 32 จาก 32 รายการ</div>
+            </div>
+            <div class="filter-tabs" id="filterTabs">
+                <button type="button" class="tab-btn active" data-group="all">ทั้งหมด (32 รายการ)</button>
+                <button type="button" class="tab-btn" data-group="g1">1. ปวดกล้ามเนื้อและข้อ</button>
+                <button type="button" class="tab-btn" data-group="g2">2. ไข้หวัด ไอ เสมหะ โควิด-19</button>
+                <button type="button" class="tab-btn" data-group="g3">3. ท้องอืด ท้องเฟ้อ จุกเสียด</button>
+                <button type="button" class="tab-btn" data-group="g4">4. ท้องผูก ริดสีดวงทวารหนัก</button>
+                <button type="button" class="tab-btn" data-group="g5">5. วิงเวียน คลื่นไส้ อาเจียน อ่อนเพลีย</button>
+                <button type="button" class="tab-btn" data-group="g6">6. ชา จากอัมพฤกษ์/อัมพาต</button>
+                <button type="button" class="tab-btn" data-group="g7">7. ผิวหนัง / แผล</button>
+                <button type="button" class="tab-btn" data-group="g8">8. นอนไม่หลับ</button>
+                <button type="button" class="tab-btn" data-group="g9">9. ท้องเสีย</button>
+                <button type="button" class="tab-btn" data-group="g10">10. เบื่ออาหาร</button>
+            </div>
+        </section>
+
+        <!-- View 1: Cards Container -->
+        <div class="cards-grid" id="cardsGrid"></div>
+
+        <!-- View 2: Quick Reference Table Container -->
+        <div class="table-view-container" id="tableViewContainer">
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th style="width: 65px; text-align: center;">ลำดับ</th>
+                        <th style="width: 24%;">รายการยาสมุนไพร (รูปแบบ/สูตร)</th>
+                        <th style="width: 14%;">อัตราจ่ายต่อ Course</th>
+                        <th style="width: 12%;">รอบเบิกจ่าย</th>
+                        <th style="width: 22%;">ปริมาณการใช้ยาต่อ Course (ต่ำสุด - สูงสุด)</th>
+                        <th style="width: 22%;">กลุ่มอาการ & รหัส ICD-10 หลัก</th>
+                    </tr>
+                </thead>
+                <tbody id="summaryTableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <h3 style="margin-bottom: 6px; color: var(--text-main);">ไม่พบรายการยาสมุนไพรที่ตรงกับคำค้นหา</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 14px;">ลองค้นหาด้วยคำอื่น เช่น ลำดับที่ 1-32 ชื่อยา อาการ รหัสโรค (เช่น J00, M79.10, R14, K59.0) หรือกดแสดงรายการทั้งหมด</p>
+            <button type="button" class="tab-btn active" id="resetFilterBtn">แสดงรายการยาทั้งหมด (32 รายการ)</button>
+        </div>
+    </main>
+
+    <footer>
+        สรุปแนวทางการจ่ายยาสมุนไพร 32 รายการ ตาม Course การรักษา (กรมการแพทย์แผนไทยและการแพทย์ทางเลือก & สปสช. ประกาศวันที่ 10 เมษายน 2568 เริ่ม 1 มี.ค. 68) • คลิกที่ป้ายรหัส ICD เพื่อคัดลอกลงคลิปบอร์ดได้ทันที
+    </footer>
+
+    <!-- Modal: ตั้งค่ารายการยา รพ.สต.บ้านจัวเหนือ -->
+    <div class="modal-overlay" id="banJuaModal" role="dialog" aria-modal="true" aria-labelledby="banJuaModalTitle">
+        <div class="modal-content" style="max-width: 920px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #92400e, #b45309);">
+                <h2 id="banJuaModalTitle">🏥 ตั้งค่ารายการยาสมุนไพรของ รพ.สต.บ้านจัวเหนือ (เลือกจาก 32 รายการ)</h2>
+                <button type="button" class="btn-close-modal" id="closeBanJuaModalBtn" title="ปิดหน้าต่าง">✕</button>
+            </div>
+            <div class="modal-toolbar">
+                <span style="font-size: 0.86rem; font-weight: 700; color: #78350f;">เลือกแล้ว <span id="modalSelectedCount">12</span> / 32 รายการ</span>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button type="button" class="tab-btn" id="btnBanJuaSelectDefault">ค่าเริ่มต้น รพ.สต. (12 รายการ)</button>
+                    <button type="button" class="tab-btn" id="btnBanJuaSelectAll">เลือกทั้งหมด (32)</button>
+                    <button type="button" class="btn-manage-banjua" id="btnSaveBanJuaConfig">✓ บันทึกและปิด</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="banjua-checklist" id="banJuaChecklist"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: 10 Disease Groups Reference Table -->
+    <div class="modal-overlay" id="refModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">ตารางสรุปอาการ 10 กลุ่มโรค รหัส ICD แพทย์แผนไทย / แพทย์แผนปัจจุบัน และยาสมุนไพรที่ใช้ในการรักษา</h2>
+                <button type="button" class="btn-close-modal" id="closeRefModalBtn" title="ปิดหน้าต่าง">✕</button>
+            </div>
+            <div class="modal-toolbar">
+                <input type="text" id="modalSearchInput" class="modal-search" placeholder="ค้นหาในตาราง 10 กลุ่มโรค (อาการ, รหัส ICD, ชื่อยา)...">
+                <span style="font-size: 0.82rem; color: var(--text-muted);">💡 คลิกที่รหัส ICD ในตารางเพื่อคัดลอกได้ทันที</span>
+            </div>
+            <div class="modal-body">
+                <table class="modal-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px; text-align: center;">ลำดับ</th>
+                            <th style="width: 22%;">กลุ่มอาการ</th>
+                            <th style="width: 23%;">รหัส ICD แพทย์แผนไทย</th>
+                            <th style="width: 25%;">รหัส ICD10 แพทย์แผนปัจจุบัน</th>
+                            <th style="width: 24%;">ยาสมุนไพรที่ใช้ในการรักษา</th>
+                        </tr>
+                    </thead>
+                    <tbody id="refTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span id="toastMsg">คัดลอกรหัสแล้ว</span>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. Database: 32 Herbal Medicines per Course (NHSO 10 Apr 2568)
+           ========================================================================== */
+        const HERBS_32_DATA = [
+            {
+                no: 1,
+                name: "ยาไพล",
+                groups: ["g1"],
+                groupLabels: ["1. ปวดกล้ามเนื้อและข้อ"],
+                replaces: "Balm, Diclofenac gel",
+                variants: [
+                    { form: "ยาไพล (ยาครีม/เจล)", rate: "40 บาท", cycle: "30 วัน", minText: "1 หลอด", maxText: "2 หลอด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "หลอด" },
+                    { form: "ยาไพล ยาขี้ผึ้ง สูตรตำรับที่ 1, 2", rate: "43 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "2 ขวด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "ขวด" },
+                    { form: "ยาน้ำมันไพล", rate: "40 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "2 ขวด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "ขวด" }
+                ],
+                indication: "ใช้รักษากลุ่มอาการทางกล้ามเนื้อ แก้ปวด บวม ฟกช้ำ เคล็ดยอก",
+                dosage: "ทาถูเบาๆ บริเวณที่มีอาการ วันละ 2-3 ครั้ง",
+                warning: "ห้ามทาบริเวณขอบตา และเนื้อเยื่ออ่อน ห้ามทาบริเวณผิวหนังที่มีบาดแผลหรือแผลเปิด",
+                icdTM: ["U57.20-U57.69", "U57.2"],
+                icdModern: ["M79.10", "M79.11", "M79.12", "M79.13", "M79.1(0-9)", "M54.9", "M25.5", "M62.6"],
+                keywords: "1 ยาไพล ไพล ขี้ผึ้ง น้ำมันไพล ปวด บวม ฟกช้ำ เคล็ดยอก กล้ามเนื้อ balm diclofenac"
+            },
+            {
+                no: 2,
+                name: "ยาเถาวัลย์เปรียง",
+                groups: ["g1"],
+                groupLabels: ["1. ปวดกล้ามเนื้อและข้อ"],
+                replaces: "ยาแก้ปวด อักเสบ (NSAIDs)",
+                variants: [
+                    { form: "เถาวัลย์เปรียง", rate: "60 บาท", cycle: "14 วัน", minText: "21,000 มก.", maxText: "42,000 มก.", unitType: "mg", minVal: 21000, maxVal: 42000, defaultStrength: 500, unitLabel: "แคปซูล" },
+                    { form: "ยาสารสกัดเถาวัลย์เปรียง", rate: "32 บาท", cycle: "14 วัน", minText: "1,400 มก.", maxText: "8,400 มก.", unitType: "mg", minVal: 1400, maxVal: 8400, defaultStrength: 200, unitLabel: "แคปซูล" },
+                    { form: "ยาผสมเถาวัลย์เปรียง สูตรตำรับที่ 1", rate: "86.5 บาท", cycle: "7 วัน", minText: "18,900 มก.", maxText: "31,500 มก.", unitType: "mg", minVal: 18900, maxVal: 31500, defaultStrength: 500, unitLabel: "แคปซูล" },
+                    { form: "ยาผสมเถาวัลย์เปรียง สูตรตำรับที่ 2", rate: "86.5 บาท", cycle: "7 วัน", minText: "18,900 มก.", maxText: "31,500 มก.", unitType: "mg", minVal: 18900, maxVal: 31500, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "บรรเทาอาการปวดกล้ามเนื้อ ลดการอักเสบของกล้ามเนื้อ และข้อ",
+                dosage: "รับประทานครั้งละ 1-3 แคปซูล วันละ 3 ครั้ง หลังอาหารทันที เช้า กลางวัน เย็น",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ และควรระวังการใช้ในผู้ป่วยที่เป็นแผลในกระเพาะอาหาร",
+                icdTM: ["U57.20-U57.69", "U57.2"],
+                icdModern: ["M79.10", "M79.11", "M79.12", "M79.13", "M79.1(0-9)", "M179", "M54.9", "M25.5"],
+                keywords: "2 เถาวัลย์เปรียง สารสกัดเถาวัลย์เปรียง ยาผสมเถาวัลย์เปรียง ปวดกล้ามเนื้อ ปวดข้อ อักเสบ nsaids"
+            },
+            {
+                no: 3,
+                name: "ยาประคบสมุนไพรสด / แห้ง",
+                groups: ["g1"],
+                groupLabels: ["1. ปวดกล้ามเนื้อและข้อ"],
+                replaces: "Balm, Diclofenac gel",
+                variants: [
+                    { form: "ยาประคบสมุนไพรสด, ยาประคบสมุนไพรแห้ง", rate: "100 บาท", cycle: "7 วัน", minText: "1 ลูก", maxText: "2 ลูก", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "ลูก" }
+                ],
+                indication: "บรรเทาอาการปวด บวม ฟกช้ำ เคล็ดยอก ปวดตึงกล้ามเนื้อและเส้นเอ็น",
+                dosage: "ประคบบริเวณที่มีอาการ วันละ 1-2 ครั้ง (เฉพาะจ่ายให้ผู้ป่วยไปใช้เองที่บ้าน)",
+                warning: "ห้ามประคบบริเวณที่มีบาดแผล ห้ามประคบเมื่อเกิดอาการเฉียบพลันใน 24 ชั่วโมงแรก ควรระวังผู้ป่วยโรคเบาหวาน อัมพาต เด็ก ผู้สูงอายุ",
+                icdTM: ["U57.20-U57.69", "U57.2"],
+                icdModern: ["M79.10", "M79.11", "M79.12", "M79.13", "M54.9", "M62.6"],
+                keywords: "3 ยาประคบ ลูกประคบ สมุนไพรสด สมุนไพรแห้ง ปวดตึงกล้ามเนื้อ เส้นเอ็น"
+            },
+            {
+                no: 4,
+                name: "ยาสหัศธารา",
+                groups: ["g1"],
+                groupLabels: ["1. ปวดกล้ามเนื้อและข้อ"],
+                replaces: "ยาแก้ปวด อักเสบ (NSAIDs)",
+                variants: [
+                    { form: "ยาสหัศธารา (ชนิดเม็ด/แคปซูล)", rate: "73 บาท", cycle: "7 วัน", minText: "21,000 มก.", maxText: "31,500 มก.", unitType: "mg", minVal: 21000, maxVal: 31500, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "ขับลมในเส้น แก้ลมกองหยาบ บรรเทาอาการปวดกล้ามเนื้อและข้อ",
+                dosage: "รับประทานครั้งละ 2-5 แคปซูล (1,000-1,500 มก.) วันละ 3 ครั้ง หลังอาหาร เช้า กลางวัน เย็น",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ และผู้ที่มีไข้ ควรระวังในผู้ป่วยโรคความดันโลหิตสูง โรคหัวใจ โรคแผลเปื่อยเพปติก โรคกรดไหลย้อน และผู้ป่วยที่มีความผิดปกติของตับ ไต",
+                icdTM: ["U57.20-U57.69", "U57.2"],
+                icdModern: ["M79.20", "M79.21", "M79.22", "M79.23", "M79.1(0-9)", "M54.9"],
+                keywords: "4 สหัศธารา สหัสธารา ขับลมในเส้น แก้ลมกองหยาบ ปวดกล้ามเนื้อ nsaids"
+            },
+            {
+                no: 5,
+                name: "ยาปราบชมพูทวีป",
+                groups: ["g2"],
+                groupLabels: ["2. ไข้หวัด ไอ เสมหะ โควิด-19"],
+                replaces: "ยาแก้แพ้ ลดน้ำมูก (Antihistamines)",
+                variants: [
+                    { form: "ยาปราบชมพูทวีป (ชนิดแคปซูล)", rate: "170 บาท", cycle: "7 วัน", minText: "21,000 มก.", maxText: "28,000 มก.", unitType: "mg", minVal: 21000, maxVal: 28000, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "บรรเทาอาการหวัดในระยะแรก และอาการที่เกิดจากการแพ้อากาศ คัดจมูก น้ำมูกไหล",
+                dosage: "รับประทานครั้งละ 750 มก. - 1.5 กรัม วันละ 4 ครั้ง ก่อนอาหารและก่อนนอน",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ ผู้ที่มีไข้ และเด็ก ควรระวังในผู้ป่วยโรคความดันโลหิตสูง โรคหัวใจ โรคแผลเปื่อยเพปติก และโรคกรดไหลย้อน",
+                icdTM: ["U56.10", "U56.19", "U58.31", "U61.2", "U64.1", "U64.3"],
+                icdModern: ["J00", "R09.8", "J40", "J42", "J20.9", "U07.1"],
+                keywords: "5 ปราบชมพูทวีป หวัด แพ้อากาศ คัดจมูก น้ำมูกไหล ภูมิแพ้"
+            },
+            {
+                no: 6,
+                name: "ยาฟ้าทะลายโจร",
+                groups: ["g2", "g9"],
+                groupLabels: ["2. ไข้หวัด ไอ เสมหะ โควิด-19", "9. ท้องเสีย"],
+                replaces: "ยาบรรเทาอาการไข้ เจ็บคอ / ยาแก้ท้องเสีย",
+                variants: [
+                    { form: "ยาฟ้าทะลายโจร (ผงจากส่วนเหนือดิน)", rate: "92 บาท", cycle: "7 วัน", minText: "2,300 มก.", maxText: "60,000 มก.", unitType: "mg", minVal: 2300, maxVal: 60000, defaultStrength: 500, unitLabel: "แคปซูล" },
+                    { form: "ยาฟ้าทะลายโจร (สารสกัด)", rate: "136.5 บาท", cycle: "7 วัน", minText: "300 มก.", maxText: "900 มก.", unitType: "mg", minVal: 300, maxVal: 900, defaultStrength: 20, unitLabel: "แคปซูล (Andro)" },
+                    { form: "ฟ้าทะลายโจร (ผงจากส่วนเหนือดินที่ควบคุม Andrographolide)", rate: "136.5 บาท", cycle: "7 วัน", minText: "300 มก.", maxText: "900 มก.", unitType: "mg", minVal: 300, maxVal: 900, defaultStrength: 20, unitLabel: "แคปซูล (Andro)" }
+                ],
+                indication: "บรรเทาอาการโรคหวัด (Common cold) เจ็บคอ โควิด-19 และบรรเทาอาการท้องเสียชนิดที่ไม่เกิดจากการติดเชื้อ",
+                dosage: "<strong>ไข้หวัดเจ็บคอ:</strong> ครั้งละ 3-6 แคปซูล (500 mg) วันละ 4 ครั้ง หลังอาหาร<br><strong>ท้องเสีย:</strong> ครั้งละ 1-4 แคปซูล วันละ 4 ครั้ง หลังอาหาร (กลุ่มสารสกัดคำนวณตามปริมาณ Andrographolide)",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ หญิงให้นมบุตร และผู้ที่แพ้ยาสมุนไพร ควรระวังการใช้ยานี้ร่วมกับสารกันเลือดเป็นลิ่ม และยาลดความดันโลหิต",
+                icdTM: ["U56.00", "U56.10", "U56.19", "U56.9", "U69.80"],
+                icdModern: ["J00", "J01.9", "J02.9", "J03.9", "J05.9", "U07.1", "A09.9"],
+                keywords: "6 ฟ้าทะลายโจร สารสกัดฟ้าทะลายโจร andrographolide ไข้ หวัด เจ็บคอ โควิด ท้องเสีย"
+            },
+            {
+                no: 7,
+                name: "ยาแก้ไอผสมมะขามป้อม",
+                groups: ["g2"],
+                groupLabels: ["2. ไข้หวัด ไอ เสมหะ โควิด-19"],
+                replaces: "ยาบรรเทาอาการไอ ขับเสมหะ",
+                variants: [
+                    { form: "ยาแก้ไอผสมมะขามป้อม สูตรตำรับที่ 1, 2 (ยาน้ำ)", rate: "84 บาท", cycle: "7 วัน", minText: "1 ขวด", maxText: "2 ขวด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "ขวด" }
+                ],
+                indication: "บรรเทาอาการไอ ขับเสมหะ ทำให้ชุ่มคอ",
+                dosage: "จิบเมื่อมีอาการไอ หรือทุก 4 ชั่วโมง",
+                warning: "ผู้ป่วยเบาหวานที่คุมระดับน้ำตาลไม่ได้ เนื่องจากมีส่วนประกอบน้ำตาลในปริมาณสูง และควรระวังในผู้ป่วยที่ท้องเสียง่ายเนื่องจากมะขามป้อมมีฤทธิ์เป็นยาระบาย",
+                icdTM: ["U64.3", "U58.31", "U59.31", "U64.1"],
+                icdModern: ["J02.9", "J02.8", "J02.0", "J00", "R05", "J40"],
+                keywords: "7 ยาแก้ไอผสมมะขามป้อม มะขามป้อม ไอ ขับเสมหะ ชุ่มคอ"
+            },
+            {
+                no: 8,
+                name: "ยาประสะมะแว้ง",
+                groups: ["g2"],
+                groupLabels: ["2. ไข้หวัด ไอ เสมหะ โควิด-19"],
+                replaces: "ยาบรรเทาอาการไอ ขับเสมหะ",
+                variants: [
+                    { form: "ยาประสะมะแว้ง (ลูกกลอน/เม็ด)", rate: "50 บาท", cycle: "7 วัน", minText: "14,000 มก.", maxText: "19,600 มก.", unitType: "mg", minVal: 14000, maxVal: 19600, defaultStrength: 200, unitLabel: "เม็ด" }
+                ],
+                indication: "บรรเทาอาการไอ มีเสมหะ ทำให้ชุ่มคอ และช่วยขับเสมหะ",
+                dosage: "อมครั้งละ 3-5 เม็ด (ขนาด 200 มก.) เมื่อมีอาการไอ หรือมีเสมหะ",
+                warning: "ผู้ที่แพ้สมุนไพรที่เป็นส่วนประกอบของยา และไม่ควรใช้นานเกิน 15 วัน หากไม่ดีขึ้นควรปรึกษาแพทย์แผนไทย",
+                icdTM: ["U64.3", "U58.31", "U59.31"],
+                icdModern: ["J02.9", "J02.8", "J02.0", "J00", "R05"],
+                keywords: "8 ประสะมะแว้ง มะแว้ง ลูกกลอน ไอ เสมหะ ชุ่มคอ"
+            },
+            {
+                no: 9,
+                name: "ยาธาตุอบเชย",
+                groups: ["g3"],
+                groupLabels: ["3. ท้องอืด ท้องเฟ้อ จุกเสียด"],
+                replaces: "Anti-Flatulence / ยาขับลม",
+                variants: [
+                    { form: "ยาธาตุอบเชย (ยาน้ำ)", rate: "84 บาท", cycle: "7 วัน", minText: "315 มล.", maxText: "630 มล.", unitType: "ml", minVal: 315, maxVal: 630, defaultStrength: 120, unitLabel: "ขวด" }
+                ],
+                indication: "ขับลม บรรเทาอาการท้องอืด ท้องเฟ้อ จุกเสียด",
+                dosage: "รับประทานครั้งละ 1-2 ช้อนโต๊ะ (15-30 มล.) วันละ 3 ครั้ง หลังอาหาร เช้า กลางวัน เย็น",
+                warning: "ควรระวังการใช้ในผู้ป่วยที่มีความผิดปกติของตับและไต ควรระวังการใช้ยาอย่างต่อเนื่องอาจเกิดการสะสมของการบูร อาจเกิดพิษต่อตับและไตได้",
+                icdTM: ["U66.80", "U66.70", "U60.02", "U60.13"],
+                icdModern: ["R14", "R101", "R10.49", "K21.9", "K30", "R10.1"],
+                keywords: "9 ยาธาตุอบเชย ธาตุอบเชย ขับลม ท้องอืด ท้องเฟ้อ จุกเสียด anti-flatulence"
+            },
+            {
+                no: 10,
+                name: "ยาขมิ้นชัน",
+                groups: ["g3"],
+                groupLabels: ["3. ท้องอืด ท้องเฟ้อ จุกเสียด"],
+                replaces: "Omeprazole / ยาลดกรดขับลม",
+                variants: [
+                    { form: "ยาขมิ้นชัน (ผง/แคปซูล)", rate: "56 บาท", cycle: "14 วัน", minText: "28,000 มก.", maxText: "56,000 มก.", unitType: "mg", minVal: 28000, maxVal: 56000, defaultStrength: 500, unitLabel: "แคปซูล" },
+                    { form: "ยาสารสกัดขมิ้นชัน", rate: "191.5 บาท", cycle: "14 วัน", minText: "21,000 มก.", maxText: "21,000 มก.", unitType: "mg", minVal: 21000, maxVal: 21000, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "บรรเทาอาการแน่นท้อง จุกเสียด ท้องอืด ท้องเฟ้อ",
+                dosage: "รับประทานครั้งละ 1-2 แคปซูล วันละ 4 ครั้ง หลังอาหาร เช้า กลางวัน เย็น และก่อนนอน",
+                warning: "ห้ามใช้ในผู้ที่ท่อน้ำดีอุดตัน หรือผู้ที่ไวต่อยานี้ ควรระวังการใช้ยากับผู้ป่วยโรคนิ่วในถุงน้ำดี หญิงตั้งครรภ์ เด็ก และระวังการใช้ร่วมกับสารกันเลือดเป็นลิ่ม",
+                icdTM: ["U57.0", "U66.80", "U66.70", "U66.88", "U60.02"],
+                icdModern: ["R14", "R101", "R10.49", "K21.9", "K30", "K29.7", "K25.9"],
+                keywords: "10 ขมิ้นชัน สารสกัดขมิ้นชัน แน่นท้อง จุกเสียด ท้องอืด ท้องเฟ้อ omeprazole"
+            },
+            {
+                no: 11,
+                name: "ยามะขามแขก",
+                groups: ["g4"],
+                groupLabels: ["4. ท้องผูก ริดสีดวงทวารหนัก"],
+                replaces: "ยาระบาย (Senna / Bisacodyl)",
+                variants: [
+                    { form: "ยามะขามแขก (ชนิดเม็ด/แคปซูล)", rate: "31.5 บาท", cycle: "7 วัน", minText: "2,400 มก.", maxText: "3,600 มก.", unitType: "mg", minVal: 2400, maxVal: 3600, defaultStrength: 400, unitLabel: "เม็ด/แคปซูล" }
+                ],
+                indication: "บรรเทาอาการท้องผูก",
+                dosage: "รับประทานครั้งละ 2-3 เม็ด (800-1,200 มก.) วันละ 1 ครั้ง ก่อนนอน เมื่อมีอาการท้องผูก",
+                warning: "ห้ามใช้ในผู้ป่วยที่มีภาวะทางเดินอาหารอุดตัน หรือปวดท้องโดยไม่ทราบสาเหตุ ห้ามใช้ในหญิงตั้งครรภ์ ควรระวังการใช้ในเด็กอายุต่ำกว่า 12 ปี และหญิงให้นมบุตร ไม่ควรใช้ติดต่อกันเป็นเวลานาน",
+                icdTM: ["U68.0", "U69.84", "U69.85", "U69.9"],
+                icdModern: ["K59.0"],
+                keywords: "11 มะขามแขก ยาระบาย ท้องผูก senna"
+            },
+            {
+                no: 12,
+                name: "ยาผสมเพชรสังฆาต",
+                groups: ["g4"],
+                groupLabels: ["4. ท้องผูก ริดสีดวงทวารหนัก"],
+                replaces: "ยารักษาริดสีดวงทวาร (Daflon)",
+                variants: [
+                    { form: "ยาผสมเพชรสังฆาต สูตรที่ 1, 2 (แคปซูล)", rate: "204 บาท", cycle: "14 วัน", minText: "54,000 มก.", maxText: "54,000 มก.", unitType: "mg", minVal: 54000, maxVal: 54000, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "บรรเทาอาการริดสีดวงทวารหนัก",
+                dosage: "รับประทานครั้งละ 1.5 กรัม (3 แคปซูล ขนาด 500 มก.) วันละ 3 ครั้ง หลังอาหารทันที",
+                warning: "ควรระวังการใช้ในหญิงตั้งครรภ์และหญิงให้นมบุตร ควรรับประทานหลังอาหารทันทีเพื่อลดการระคายเคืองกระเพาะอาหาร",
+                icdTM: ["U69.84", "U69.85", "U69.9"],
+                icdModern: ["K64.0", "K64.1", "K64.2"],
+                keywords: "12 ยาผสมเพชรสังฆาต เพชรสังฆาต ริดสีดวงทวารหนัก ริดสีดวง"
+            },
+            {
+                no: 13,
+                name: "ยาขิง",
+                groups: ["g3", "g5"],
+                groupLabels: ["3. ท้องอืด ท้องเฟ้อ จุกเสียด", "5. วิงเวียน คลื่นไส้ อาเจียน อ่อนเพลีย"],
+                replaces: "Domperidone / Dimenhydrinate",
+                variants: [
+                    { form: "ยาขิง (แคปซูล/ผงชง)", rate: "84 บาท", cycle: "7 วัน", minText: "1,400 มก.", maxText: "28,000 มก.", unitType: "mg", minVal: 1400, maxVal: 28000, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "บรรเทาอาการท้องอืด ขับลม แน่นจุกเสียด และป้องกัน/บรรเทาอาการคลื่นไส้ อาเจียน จากการเมารถ เมาเรือ",
+                dosage: "<strong>ท้องอืดขับลม:</strong> ครั้งละ 1 กรัม วันละ 3 ครั้ง หลังอาหาร<br><strong>ป้องกันเมารถเมาเรือ:</strong> รับประทาน 1-2 กรัม ก่อนเดินทาง 30 นาที - 1 ชั่วโมง",
+                warning: "ควรระวังการใช้ร่วมกับสารกันเลือดเป็นลิ่ม (Anticoagulants) และยาต้านการจับตัวของเกล็ดเลือด ระวังการใช้ในผู้ป่วยโรคนิ่วในถุงน้ำดี",
+                icdTM: ["U60.02", "U66.70", "U66.80", "U57.1", "U61.30", "U75.6"],
+                icdModern: ["R14", "K30", "R42", "H81.3", "T75.3"],
+                keywords: "13 ยาขิง ขิง ท้องอืด ขับลม คลื่นไส้ อาเจียน วิงเวียน เมารถ เมาเรือ"
+            },
+            {
+                no: 14,
+                name: "ยาหอมนวโกฐ",
+                groups: ["g5"],
+                groupLabels: ["5. วิงเวียน คลื่นไส้ อาเจียน อ่อนเพลีย"],
+                replaces: "ยาแก้วิงเวียน หน้ามืด คลื่นไส้",
+                variants: [
+                    { form: "ยาหอมนวโกฐ (ชนิดผง/เม็ด)", rate: "70 บาท", cycle: "7 วัน", minText: "21,000 มก.", maxText: "42,000 มก.", unitType: "mg", minVal: 21000, maxVal: 42000, defaultStrength: 500, unitLabel: "เม็ด/แคปซูล" }
+                ],
+                indication: "แก้ลมวิงเวียน คลื่นเหียน อาเจียน แก้ลมจุกแน่นในท้อง และแก้อาการอ่อนเพลียหลังฟื้นไข้",
+                dosage: "รับประทานครั้งละ 1-2 กรัม ละลายน้ำกระสายยาหรือน้ำสุก เมื่อมีอาการ ทุก 3-4 ชั่วโมง ไม่เกินวันละ 3 ครั้ง",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ ควรระวังการรับประทานร่วมกับยาต้านการแข็งตัวของเลือด และไม่ควรใช้ติดต่อกันเป็นเวลานาน",
+                icdTM: ["U57.1", "U61.30", "U61.31", "U75.6", "U66.81", "U66.83"],
+                icdModern: ["R42", "H81.3", "T75.3"],
+                keywords: "14 ยาหอมนวโกฐ ยาหอม วิงเวียน คลื่นไส้ อาเจียน อ่อนเพลีย หน้ามืด"
+            },
+            {
+                no: 15,
+                name: "ยาว่านหางจระเข้",
+                groups: ["g7"],
+                groupLabels: ["7. ผิวหนัง / แผล"],
+                replaces: "Silver sulfadiazine / เจลทาแผลไฟไหม้",
+                variants: [
+                    { form: "ยาว่านหางจระเข้ (เจล/ครีม)", rate: "53 บาท", cycle: "7 วัน", minText: "1 หลอด", maxText: "2 หลอด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "หลอด" }
+                ],
+                indication: "รักษาแผลไฟไหม้ น้ำร้อนลวก ระดับตื้น และช่วยสมานแผล ลดการอักเสบของผิวหนัง",
+                dosage: "ทาบริเวณแผลไฟไหม้ น้ำร้อนลวก วันละ 2-3 ครั้ง",
+                warning: "ใช้สำหรับทาภายนอกเท่านั้น หากมีอาการแพ้ ผื่นแดง หรือแผลติดเชื้อรุนแรง ควรหยุดใช้และพบแพทย์",
+                icdTM: ["U70.20", "U70.21", "U70.60", "U70.79", "U70.81"],
+                icdModern: ["T20.0", "T20.1", "T21.0", "T21.1", "T22.0", "T23.0", "T24.0", "T25.0"],
+                keywords: "15 ว่านหางจระเข้ เจลว่านหางจระเข้ แผลไฟไหม้ น้ำร้อนลวก ผิวหนัง"
+            },
+            {
+                no: 16,
+                name: "ยาเปลือกมังคุด",
+                groups: ["g7"],
+                groupLabels: ["7. ผิวหนัง / แผล"],
+                replaces: "Povidone-iodine / ยาใส่แผลสด",
+                variants: [
+                    { form: "ยาเปลือกมังคุด (ยาน้ำทาแผล)", rate: "30.5 บาท", cycle: "7 วัน", minText: "1 ขวด", maxText: "2 ขวด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "ขวด" }
+                ],
+                indication: "รักษาแผลสด แผลเรื้อรัง และลดการอักเสบติดเชื้อที่ผิวหนัง",
+                dosage: "ทาบริเวณแผล วันละ 2 ครั้ง เช้า-เย็น",
+                warning: "ใช้สำหรับทาภายนอกเท่านั้น ห้ามรับประทาน และระวังอย่าให้เข้าตา",
+                icdTM: ["U70.79", "U70.81", "U70.83", "U70.88", "U70.89"],
+                icdModern: ["L50.9", "T20.0", "T21.0", "T22.0"],
+                keywords: "16 ยาเปลือกมังคุด เปลือกมังคุด แผลสด แผลเรื้อรัง ผิวหนัง"
+            },
+            {
+                no: 17,
+                name: "ยาพญายอ",
+                groups: ["g7"],
+                groupLabels: ["7. ผิวหนัง / แผล"],
+                replaces: "Acyclovir cream / ยาทาเริม งูสวัด",
+                variants: [
+                    { form: "ยาพญายอ (ครีม/โลชั่น/กลีเซอรีน)", rate: "33 บาท", cycle: "7 วัน", minText: "1 หลอด/ขวด", maxText: "1 หลอด/ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "หลอด/ขวด" }
+                ],
+                indication: "บรรเทาอาการอักเสบ ปวด บวม จากแมลงสัตว์กัดต่อย เริม งูสวัด และแผลในปาก (ชนิดกลีเซอรีน)",
+                dosage: "ทาบริเวณที่มีอาการ วันละ 3-4 ครั้ง",
+                warning: "ใช้ทาภายนอกหรือป้ายปากตามรูปแบบยา ระวังอย่าให้เข้าตา",
+                icdTM: ["U70.20", "U70.21", "U70.60", "U70.88"],
+                icdModern: ["B02.9", "B00.9", "R21", "L50.9"],
+                keywords: "17 ยาพญายอ พญายอ เริม งูสวัด แมลงกัดต่อย แผลในปาก"
+            },
+            {
+                no: 18,
+                name: "ยาทิงเจอร์ทองพันชั่ง",
+                groups: ["g7"],
+                groupLabels: ["7. ผิวหนัง / แผล"],
+                replaces: "Clotrimazole / ยารักษากลาก เกลื้อน",
+                variants: [
+                    { form: "ยาทิงเจอร์ทองพันชั่ง (ยาน้ำ)", rate: "48 บาท", cycle: "7 วัน", minText: "1 ขวด", maxText: "2 ขวด", unitType: "pack", minVal: 1, maxVal: 2, unitLabel: "ขวด" }
+                ],
+                indication: "รักษากลาก เกลื้อน โรคผิวหนังที่เกิดจากเชื้อรา และน้ำกัดเท้า",
+                dosage: "ทาบริเวณที่เป็น วันละ 2-3 ครั้ง ต่อเนื่องจนกว่าจะหายและทาต่ออีก 2 สัปดาห์",
+                warning: "ใช้ทาภายนอกเท่านั้น ห้ามทาบริเวณแผลเปิด เนื้อเยื่ออ่อน และระวังอย่าให้เข้าตา",
+                icdTM: ["U70.20", "U70.21", "U70.81", "U70.89"],
+                icdModern: ["B36.0", "B35.3", "B35.4", "B35.6", "B37.2"],
+                keywords: "18 ทิงเจอร์ทองพันชั่ง ทองพันชั่ง กลาก เกลื้อน เชื้อรา น้ำกัดเท้า"
+            },
+            {
+                no: 19,
+                name: "ยาแก้ลมแก้เส้น",
+                groups: ["g6"],
+                groupLabels: ["6. ชา จากอัมพฤกษ์/อัมพาต"],
+                replaces: "ยาคลายกล้ามเนื้อ / บำรุงปลายประสาท",
+                variants: [
+                    { form: "ยาแก้ลมแก้เส้น (แคปซูล)", rate: "420 บาท", cycle: "14 วัน", minText: "42,000 มก.", maxText: "84,000 มก.", unitType: "mg", minVal: 42000, maxVal: 84000, defaultStrength: 500, unitLabel: "แคปซูล" },
+                    { form: "ยาแก้ลมแก้เส้น (ซอง)", rate: "390 บาท", cycle: "14 วัน", minText: "42,000 มก.", maxText: "84,000 มก.", unitType: "mg", minVal: 42000, maxVal: 84000, defaultStrength: 3000, unitLabel: "ซอง" }
+                ],
+                indication: "บรรเทาอาการปวดตึงกล้ามเนื้อ ชาตามมือและเท้า หรืออาการอัมพฤกษ์ อัมพาต",
+                dosage: "รับประทานครั้งละ 1-2 กรัม วันละ 3 ครั้ง ก่อนอาหาร เช้า กลางวัน เย็น",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ ผู้ที่มีไข้ และเด็ก ควรระวังในผู้ป่วยโรคความดันโลหิตสูง โรคหัวใจ และโรคกระเพาะอาหาร",
+                icdTM: ["U61.0", "U61.10-U61.19"],
+                icdModern: ["I69.0", "I69.1", "I69.2", "I69.3", "I69.4", "G81"],
+                keywords: "19 ยาแก้ลมแก้เส้น แก้ลมแก้เส้น ชา อัมพฤกษ์ อัมพาต"
+            },
+            {
+                no: 20,
+                name: "ยาทำลายพระสุเมรุ",
+                groups: ["g6"],
+                groupLabels: ["6. ชา จากอัมพฤกษ์/อัมพาต"],
+                replaces: "ยาฟื้นฟูอาการอัมพฤกษ์/อัมพาต",
+                variants: [
+                    { form: "ยาทำลายพระสุเมรุ (แคปซูล ขนาด 500 mg/แคปซูล)", rate: "270 บาท", cycle: "7 วัน", minText: "ตามขนาด 500 mg/แคปซูล", maxText: "ตามเกณฑ์ Course 7 วัน", unitType: "pack", minVal: 1, maxVal: 84, unitLabel: "แคปซูล" },
+                    { form: "ยาทำลายพระสุเมรุ (ซอง ขนาด 2,000 mg/ซอง)", rate: "240 บาท", cycle: "7 วัน", minText: "ตามขนาด 2000 mg/ซอง", maxText: "ตามเกณฑ์ Course 7 วัน", unitType: "pack", minVal: 1, maxVal: 21, unitLabel: "ซอง" }
+                ],
+                indication: "บรรเทาอาการเกร็งกล้ามเนื้อ แขนขาอ่อนแรง ชา จากอัมพฤกษ์ อัมพาต",
+                dosage: "รับประทานครั้งละ 1-2 กรัม วันละ 3 ครั้ง ก่อนอาหาร เช้า กลางวัน เย็น",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ ผู้ที่มีไข้ และเด็ก ควรระวังในผู้ป่วยโรคตับ โรคไต โรคหัวใจ และความดันโลหิตสูง",
+                icdTM: ["U61.0", "U61.10-U61.19"],
+                icdModern: ["I69.0", "I69.1", "I69.2", "I69.3", "I69.4", "G81"],
+                keywords: "20 ยาทำลายพระสุเมรุ ทำลายพระสุเมรุ อัมพฤกษ์ อัมพาต ชา อ่อนแรง"
+            },
+            {
+                no: 21,
+                name: "ยาศุขไสยาศน์",
+                groups: ["g8"],
+                groupLabels: ["8. นอนไม่หลับ"],
+                replaces: "ยานอนหลับ / คลายกังวล (Sedatives)",
+                variants: [
+                    { form: "ยาศุขไสยาศน์ (แคปซูล ขนาด 500 mg/แคปซูล)", rate: "420 บาท", cycle: "14 วัน", minText: "ตามขนาด 500 mg/แคปซูล", maxText: "ตามเกณฑ์ Course 14 วัน", unitType: "pack", minVal: 1, maxVal: 84, unitLabel: "แคปซูล" },
+                    { form: "ยาศุขไสยาศน์ (ซอง ขนาด 2,000 mg/ซอง)", rate: "330 บาท", cycle: "14 วัน", minText: "ตามขนาด 2000 mg/ซอง", maxText: "ตามเกณฑ์ Course 14 วัน", unitType: "pack", minVal: 1, maxVal: 28, unitLabel: "ซอง" }
+                ],
+                indication: "ช่วยให้นอนหลับ เจริญอาหาร และฟื้นฟูกำลังในผู้ป่วยเรื้อรัง",
+                dosage: "รับประทานครั้งละ 1-2 กรัม วันละ 1 ครั้ง ก่อนนอน (มีส่วนประกอบของใบกัญชา)",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ หญิงให้นมบุตร ผู้ที่มีอายุต่ำกว่า 20 ปี และผู้ที่แพ้ส่วนประกอบในตำรับ หลีกเลี่ยงการขับขี่ยานพาหนะหลังรับประทานยา",
+                icdTM: ["U75.20", "U75.22"],
+                icdModern: ["F51.0", "G47.0"],
+                keywords: "21 ยาศุขไสยาศน์ ศุขไสยาศน์ นอนไม่หลับ หลับยาก กัญชา"
+            },
+            {
+                no: 22,
+                name: "ยาน้ำมันกัญชา (THC 2.0 mg/ml)",
+                groups: ["g8", "g10"],
+                groupLabels: ["8. นอนไม่หลับ", "10. เบื่ออาหาร"],
+                replaces: "ยานอนหลับ / ยาเจริญอาหาร",
+                variants: [
+                    { form: "ยาน้ำมันกัญชาที่ผลิตจากช่อดอกซึ่งมี delta-9-THC 2.0 mg/ml", rate: "344 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" }
+                ],
+                indication: "ช่วยให้นอนหลับ ลดอาการปวดเรื้อรัง และกระตุ้นความอยากอาหาร (ในกลุ่มอาการเบื่ออาหาร)",
+                dosage: "หยดใต้ลิ้นตามคำสั่งแพทย์แผนไทย/แพทย์ผู้สั่งใช้ เริ่มต้นในขนาดต่ำก่อนนอน",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ หญิงให้นมบุตร ผู้ป่วยโรคจิตเภท/อารมณ์แปรปรวนรุนแรง และผู้แพ้กัญชา ระวังในผู้ป่วยโรคหัวใจและหลอดเลือด",
+                icdTM: ["U75.20", "U75.22", "U66.81"],
+                icdModern: ["F51.0", "G47.0", "R63.0"],
+                keywords: "22 ยาน้ำมันกัญชา น้ำมันกัญชา thc 2.0 นอนไม่หลับ เบื่ออาหาร ช่อดอก"
+            },
+            {
+                no: 23,
+                name: "ยาน้ำมันกัญชาทั้งห้า",
+                groups: ["g8"],
+                groupLabels: ["8. นอนไม่หลับ"],
+                replaces: "ยานอนหลับ / ปรับสมดุล",
+                variants: [
+                    { form: "ยาน้ำมันกัญชาทั้งห้า", rate: "600 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" }
+                ],
+                indication: "ช่วยให้นอนหลับ บรรเทาอาการปวดเมื่อย และฟื้นฟูสุขภาพ",
+                dosage: "รับประทานหรือหยดตามขนาดที่แพทย์แผนไทยกำหนด",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ หญิงให้นมบุตร และผู้ที่มีอายุต่ำกว่า 20 ปี ระวังอาการง่วงซึม วิงเวียนศีรษะ",
+                icdTM: ["U75.20", "U75.22"],
+                icdModern: ["F51.0", "G47.0"],
+                keywords: "23 ยาน้ำมันกัญชาทั้งห้า กัญชาทั้งห้า นอนไม่หลับ"
+            },
+            {
+                no: 24,
+                name: "ยาน้ำมันสารสกัดกัญชา CBD:THC ≥ 20:1",
+                groups: ["g6"],
+                groupLabels: ["6. ชา จากอัมพฤกษ์/อัมพาต"],
+                replaces: "ยาควบคุมอาการเกร็ง/ฟื้นฟูระบบประสาท",
+                variants: [
+                    { form: "CBD 100 mg/ml และ THC อัตราส่วน CBD:THC ≥ 20:1 ขนาด 10 ml", rate: "2,000 บาท/ขวด (จ่ายตามจริง)", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" },
+                    { form: "CBD 100 mg/ml และ THC อัตราส่วน CBD:THC ≥ 20:1 ขนาด 30 ml", rate: "6,000 บาท/ขวด (จ่ายตามจริง)", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" }
+                ],
+                indication: "ใช้ในกลุ่มอาการชา อัมพฤกษ์ อัมพาต และภาวะหดเกร็งของกล้ามเนื้อตามข้อบ่งชี้ทางการแพทย์",
+                dosage: "ปรับขนาดยาตามน้ำหนักตัวและคำสั่งแพทย์ผู้เชี่ยวชาญ",
+                warning: "ต้องสั่งจ่ายโดยแพทย์/แพทย์แผนไทยที่ผ่านการอบรมตามเกณฑ์กระทรวงสาธารณสุข ระวังปฏิกิริยาระหว่างยากับยาต้านการแข็งตัวของเลือดและยากันชัก",
+                icdTM: ["U61.0", "U61.10-U61.19"],
+                icdModern: ["I69.0", "I69.1", "I69.2", "I69.3", "I69.4", "G81"],
+                keywords: "24 สารสกัดกัญชา cbd thc 20:1 10 ml 30 ml ชา อัมพฤกษ์ อัมพาต"
+            },
+            {
+                no: 25,
+                name: "ยาน้ำมันสารสกัดกัญชา THC:CBD 1:1",
+                groups: ["g8"],
+                groupLabels: ["8. นอนไม่หลับ"],
+                replaces: "ยาบรรเทาปวด/ช่วยการนอนหลับ",
+                variants: [
+                    { form: "ยาน้ำมันสารสกัดกัญชาที่มี delta-9-THC และ CBD ในอัตราส่วน 1:1", rate: "1,800 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" }
+                ],
+                indication: "บรรเทาอาการนอนไม่หลับเรื้อรัง และอาการปวดที่ดื้อต่อการรักษามาตรฐาน",
+                dosage: "หยดใต้ลิ้นตามแผนการรักษาของแพทย์ผู้สั่งใช้",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ ให้นมบุตร ผู้ป่วยโรคจิตเวชรุนแรง และโรคหัวใจที่ควบคุมไม่ได้",
+                icdTM: ["U75.20", "U75.22"],
+                icdModern: ["F51.0", "G47.0"],
+                keywords: "25 สารสกัดกัญชา 1:1 thc cbd นอนไม่หลับ"
+            },
+            {
+                no: 26,
+                name: "ยาน้ำมันสารสกัดกัญชา THC (0.5 / 3 mg/drop)",
+                groups: ["g8"],
+                groupLabels: ["8. นอนไม่หลับ"],
+                replaces: "ยานอนหลับ / บรรเทาอาการปวด",
+                variants: [
+                    { form: "delta-9-THC ความแรงไม่เกิน 0.5 mg/drop", rate: "1,000 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" },
+                    { form: "delta-9-THC ความแรงไม่เกิน 3 mg/drop", rate: "1,625 บาท", cycle: "30 วัน", minText: "1 ขวด", maxText: "1 ขวด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "ขวด" }
+                ],
+                indication: "ช่วยให้นอนหลับในผู้ที่มีปัญหานอนไม่หลับรุนแรง หรือใช้ดูแลผู้ป่วยประคับประคอง",
+                dosage: "หยดใต้ลิ้นเริ่มต้น 1 หยดก่อนนอน และปรับขนาดตามการตอบสนองภายใต้การดูแลของแพทย์",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ ให้นมบุตร ผู้มีประวัติโรคจิตเวช และระวังภาวะความดันโลหิตตกเมื่อเปลี่ยนท่า",
+                icdTM: ["U75.20", "U75.22"],
+                icdModern: ["F51.0", "G47.0"],
+                keywords: "26 สารสกัดกัญชา 0.5 mg/drop 3 mg/drop thc นอนไม่หลับ"
+            },
+            {
+                no: 27,
+                name: "ยาหอมเทพจิตร",
+                groups: ["g8", "g5"],
+                groupLabels: ["8. นอนไม่หลับ", "5. วิงเวียน คลื่นไส้ อาเจียน อ่อนเพลีย"],
+                replaces: "ยาคลายกังวล / ช่วยผ่อนคลายนอนหลับ",
+                variants: [
+                    { form: "ยาหอมเทพจิตร (ชนิดผง/เม็ด)", rate: "70 บาท", cycle: "7 วัน", minText: "21,000 มก.", maxText: "29,400 มก.", unitType: "mg", minVal: 21000, maxVal: 29400, defaultStrength: 500, unitLabel: "เม็ด/แคปซูล" }
+                ],
+                indication: "แก้ลมกองละเอียด ได้แก่ อาการหน้ามืด ตาลาย สวิงสวาย ใจสั่น ช่วยให้จิตใจสงบและนอนหลับง่ายขึ้น",
+                dosage: "รับประทานครั้งละ 1-1.4 กรัม ละลายน้ำสุก เมื่อมีอาการ หรือรับประทานก่อนนอน",
+                warning: "ควรระวังการรับประทานร่วมกับยาในกลุ่มสารกันเลือดเป็นลิ่ม และไม่ควรใช้ติดต่อกันเป็นเวลานานเกินความจำเป็น",
+                icdTM: ["U75.20", "U75.22", "U57.1"],
+                icdModern: ["F51.0", "G47.0", "R42"],
+                keywords: "27 ยาหอมเทพจิตร ยาหอม นอนไม่หลับ ใจสั่น หน้ามืด วิงเวียน"
+            },
+            {
+                no: 28,
+                name: "ยากล้วย",
+                groups: ["g9"],
+                groupLabels: ["9. ท้องเสีย"],
+                replaces: "ยาแก้ท้องเสีย / เคลือบกระเพาะ (Kaolin / Smecta)",
+                variants: [
+                    { form: "ยากล้วย (ผงกล้วยดิบชง/แคปซูล)", rate: "32.5 บาท", cycle: "7 วัน", minText: "90,000 มก.", maxText: "90,000 มก.", unitType: "mg", minVal: 90000, maxVal: 90000, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "บรรเทาอาการท้องเสียชนิดที่ไม่เกิดจากการติดเชื้อ และช่วยสมานแผลในกระเพาะอาหาร",
+                dosage: "รับประทานครั้งละ 3-5 กรัม ชงน้ำร้อนดื่ม หรือรับประทานแคปซูล วันละ 3-4 ครั้ง หลังอาหารและก่อนนอน",
+                warning: "อาจทำให้เกิดอาการท้องอืดหรือท้องผูกได้ หากมีอาการท้องเสียร่วมกับมีไข้สูงหรือถ่ายเป็นมูกเลือดควรส่งพบแพทย์",
+                icdTM: ["U69.80"],
+                icdModern: ["A09.9"],
+                keywords: "28 ยากล้วย กล้วยดิบ ท้องเสีย โรคกระเพาะ"
+            },
+            {
+                no: 29,
+                name: "ยาเหลืองปิดสมุทร",
+                groups: ["g9"],
+                groupLabels: ["9. ท้องเสีย"],
+                replaces: "Loperamide / ยาหยุดถ่ายชนิดไม่ติดเชื้อ",
+                variants: [
+                    { form: "ยาเหลืองปิดสมุทร (ชนิดเม็ด/แคปซูล)", rate: "37 บาท", cycle: "7 วัน", minText: "6,000 มก.", maxText: "6,000 มก.", unitType: "mg", minVal: 6000, maxVal: 6000, defaultStrength: 500, unitLabel: "เม็ด/แคปซูล" }
+                ],
+                indication: "บรรเทาอาการท้องเสียชนิดที่ไม่เกิดจากการติดเชื้อ (เช่น อุจจาระไม่มีมูกเลือด หรือไม่มีไข้)",
+                dosage: "รับประทานครั้งละ 1 กรัม (2 เม็ด ขนาด 500 มก.) วันละ 3 ครั้ง ก่อนอาหาร เช้า กลางวัน เย็น",
+                warning: "ห้ามใช้ในผู้ป่วยท้องเสียจากการติดเชื้อ (มีไข้สูง ถ่ายเป็นมูกเลือด) ห้ามใช้ในหญิงตั้งครรภ์ และไม่ควรใช้ติดต่อกันเกิน 3 วัน",
+                icdTM: ["U69.80"],
+                icdModern: ["A09.9"],
+                keywords: "29 ยาเหลืองปิดสมุทร เหลืองปิดสมุทร ท้องเสีย"
+            },
+            {
+                no: 30,
+                name: "ยามะระขี้นก",
+                groups: ["g10"],
+                groupLabels: ["10. เบื่ออาหาร"],
+                replaces: "ยาเจริญอาหาร / บำรุงธาตุ",
+                variants: [
+                    { form: "ยามะระขี้นก (แคปซูล)", rate: "46 บาท", cycle: "7 วัน", minText: "15,000 มก.", maxText: "21,000 มก.", unitType: "mg", minVal: 15000, maxVal: 21000, defaultStrength: 500, unitLabel: "แคปซูล" }
+                ],
+                indication: "แก้ไข้ แก้ร้อนใน และช่วยเจริญอาหาร ในผู้ที่มีอาการเบื่ออาหาร",
+                dosage: "รับประทานครั้งละ 500 มก. - 1 กรัม (1-2 แคปซูล) วันละ 3 ครั้ง ก่อนอาหาร เช้า กลางวัน เย็น",
+                warning: "ห้ามใช้ในหญิงตั้งครรภ์ เด็ก และผู้ที่มีภาวะน้ำตาลในเลือดต่ำ ควรระวังการใช้ร่วมกับยาลดระดับน้ำตาลในเลือด (อาจเสริมฤทธิ์ทำให้น้ำตาลต่ำ)",
+                icdTM: ["U66.81"],
+                icdModern: ["R63.0"],
+                keywords: "30 ยามะระขี้นก มะระขี้นก เบื่ออาหาร เจริญอาหาร ร้อนใน"
+            },
+            {
+                no: 31,
+                name: "ยาพริก",
+                groups: ["g1"],
+                groupLabels: ["1. ปวดกล้ามเนื้อและข้อ"],
+                replaces: "Capsaicin gel / ยาทาบรรเทาปวดข้อเข่า",
+                variants: [
+                    { form: "ยาพริก (เจล/ครีม)", rate: "40 บาท", cycle: "30 วัน", minText: "1 หลอด", maxText: "1 หลอด", unitType: "pack", minVal: 1, maxVal: 1, unitLabel: "หลอด" }
+                ],
+                indication: "บรรเทาอาการปวดข้อ ปวดกล้ามเนื้อ (เช่น ข้อเข่าเสื่อม) และอาการปวดตามแนวเส้นประสาท",
+                dosage: "ทาบางๆ บริเวณที่มีอาการ วันละ 3-4 ครั้ง (ล้างมือให้สะอาดหลังทายาทุกครั้ง)",
+                warning: "ห้ามทาบริเวณผิวหนังที่มีแผลเปิด ผิวหนังอักเสบ ระวังอย่าให้เข้าตาหรือสัมผัสเนื้อเยื่ออ่อน อาจรู้สึกร้อนวูบวาบในช่วงแรกของการทา",
+                icdTM: ["U57.20-U57.69"],
+                icdModern: ["M179", "M79.1(0-9)", "M54.9", "M25.5"],
+                keywords: "31 ยาพริก เจลพริก ครีมพริก capsaicin ปวดข้อ ข้อเข่าเสื่อม ปวดกล้ามเนื้อ"
+            },
+            {
+                no: 32,
+                name: "ยาเขียวหอม",
+                groups: ["g2"],
+                groupLabels: ["2. ไข้หวัด ไอ เสมหะ โควิด-19"],
+                replaces: "ยาลดไข้ / บรรเทาอาการร้อนในกระหายน้ำ",
+                variants: [
+                    { form: "ยาเขียวหอม (ชนิดผง/เม็ด)", rate: "70 บาท", cycle: "7 วัน", minText: "14,000 มก.", maxText: "28,000 มก.", unitType: "mg", minVal: 14000, maxVal: 28000, defaultStrength: 500, unitLabel: "เม็ด/แคปซูล" }
+                ],
+                indication: "บรรเทาอาการไข้ ร้อนในกระหายน้ำ แก้พิษหัด พิษอีสุกอีใส (บรรเทาอาการไข้หวัดร่วมด้วย)",
+                dosage: "รับประทานครั้งละ 1 กรัม ละลายน้ำสุก หรือน้ำดอกมะลิ ทุก 4-6 ชั่วโมง เมื่อมีอาการไข้",
+                warning: "ควรระวังการใช้ในผู้ที่แพ้ละอองเกสรดอกไม้ หรือสมุนไพรที่เป็นส่วนประกอบในตำรับ หากไข้ไม่ลดภายใน 2-3 วันควรพบแพทย์",
+                icdTM: ["U56.10", "U56.19", "U58.31", "U64.1"],
+                icdModern: ["J00", "R09.8", "J20.9", "U07.1"],
+                keywords: "32 ยาเขียวหอม เขียวหอม ไข้ ไข้หวัด ร้อนใน กระหายน้ำ อีสุกอีใส"
+            }
+        ];
+
+        const TEN_GROUPS_DATA = [
+            {
+                no: 1,
+                group: "กลุ่มอาการปวดกล้ามเนื้อและข้อ",
+                icdTM: ["U57.20-U57.69"],
+                icdModern: ["M79.1(0-9)", "M179", "M54.9(0-9)", "M25.5(0-9)", "M79.8(0-9)", "M62.6(0-9)"],
+                herbs: "1. ยาไพล, 2. ยาเถาวัลย์เปรียง, 3. ยาประคบสมุนไพร, 4. ยาสหัศธารา, 31. ยาพริก"
+            },
+            {
+                no: 2,
+                group: "กลุ่มอาการไข้หวัด ไอ เสมหะ โควิด 19",
+                icdTM: ["U56.10", "U56.19", "U58.31", "U61.2", "U64.1", "U64.3"],
+                icdModern: ["J00", "R09.8", "J40", "J42", "J20.9", "U07.1"],
+                herbs: "5. ยาปราบชมพูทวีป, 6. ยาฟ้าทะลายโจร/สารสกัด, 7. ยาแก้ไอผสมมะขามป้อม, 8. ยาประสะมะแว้ง, 32. ยาเขียวหอม"
+            },
+            {
+                no: 3,
+                group: "กลุ่มอาการท้องอืด ท้องเฟ้อ จุกเสียด",
+                icdTM: ["U60.02", "U60.13", "U66.70", "U66.72", "U66.73", "U66.80"],
+                icdModern: ["R10.1", "R14", "K29.7", "K25.9"],
+                herbs: "9. ยาธาตุอบเชย, 10. ยาขมิ้นชัน/สารสกัดขมิ้นชัน, 13. ยาขิง"
+            },
+            {
+                no: 4,
+                group: "กลุ่มอาการท้องผูก ริดสีดวงทวารหนัก",
+                icdTM: ["U68.0", "U69.84", "U69.85", "U69.9"],
+                icdModern: ["K59.0", "K64.0", "K64.1", "K64.2"],
+                herbs: "11. ยามะขามแขก, 12. ยาผสมเพชรสังฆาตสูตรที่ 1, 2"
+            },
+            {
+                no: 5,
+                group: "กลุ่มอาการวิงเวียน คลื่นไส้/อาเจียน/อ่อนเพลีย",
+                icdTM: ["U57.1", "U61.30", "U61.31", "U75.6", "U66.81", "U66.83"],
+                icdModern: ["R42", "H81.3", "T75.3"],
+                herbs: "13. ยาขิง, 14. ยาหอมนวโกฐ, 27. ยาหอมเทพจิตร"
+            },
+            {
+                no: 6,
+                group: "กลุ่มอาการชา จากอัมพฤกษ์/อัมพาต",
+                icdTM: ["U61.0", "U61.10-U61.19"],
+                icdModern: ["I69.0", "I69.1", "I69.2", "I69.3", "I69.4", "G81"],
+                herbs: "19. ยาแก้ลมแก้เส้น, 20. ยาทำลายพระสุเมรุ, 24. ยาน้ำมันสารสกัดกัญชา CBD:THC ≥ 20:1"
+            },
+            {
+                no: 7,
+                group: "กลุ่มอาการทางผิวหนัง/แผล",
+                icdTM: ["U70.20", "U70.21", "U70.60", "U70.79", "U70.81", "U70.83", "U70.88", "U70.89"],
+                icdModern: ["B36.0", "R21", "L50.9", "B02.9", "B00.9", "B35.3", "B35.4", "B35.6", "B37.2", "T20.0-T25.2"],
+                herbs: "15. ยาว่านหางจระเข้, 16. ยาเปลือกมังคุด, 17. ยาพญายอ, 18. ยาทิงเจอร์ทองพันชั่ง"
+            },
+            {
+                no: 8,
+                group: "กลุ่มอาการนอนไม่หลับ",
+                icdTM: ["U75.20", "U75.22"],
+                icdModern: ["F51.0", "G47.0"],
+                herbs: "21. ยาศุขไสยาศน์, 22. น้ำมันกัญชา THC 2.0 mg/ml, 23. น้ำมันกัญชาทั้งห้า, 25. สารสกัดกัญชา 1:1, 26. สารสกัดกัญชา 0.5/3 mg/drop, 27. ยาหอมเทพจิตร"
+            },
+            {
+                no: 9,
+                group: "กลุ่มอาการท้องเสีย",
+                icdTM: ["U69.80"],
+                icdModern: ["A09.9"],
+                herbs: "6. ยาฟ้าทะลายโจร, 28. ยากล้วย, 29. ยาเหลืองปิดสมุทร"
+            },
+            {
+                no: 10,
+                group: "กลุ่มอาการเบื่ออาหาร",
+                icdTM: ["U66.81"],
+                icdModern: ["R63.0"],
+                herbs: "22. ยาน้ำมันกัญชา THC 2.0 mg/ml, 30. ยามะระขี้นก"
+            }
+        ];
+
+        /* ==========================================================================
+           2. State & DOM Elements
+           ========================================================================== */
+        const DEFAULT_BANJUA_IDS = [1, 2, 4, 6, 7, 8, 10, 11, 12, 14, 17, 27];
+        let banJuaHerbIds = (() => {
+            try {
+                const saved = localStorage.getItem("banjua_herbs_32_v3");
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) return parsed;
+                }
+            } catch (e) {}
+            return [...DEFAULT_BANJUA_IDS];
+        })();
+
+        let onlyBanJua = false;
+        let currentGroup = "all";
+        let currentSearch = "";
+        let currentView = "cards"; // "cards" | "table"
+
+        const btnBanJuaNuea = document.getElementById("btnBanJuaNuea");
+        const banJuaCountBadge = document.getElementById("banJuaCountBadge");
+        const banJuaBanner = document.getElementById("banJuaBanner");
+        const openBanJuaConfigBtn = document.getElementById("openBanJuaConfigBtn");
+        const exitBanJuaBtn = document.getElementById("exitBanJuaBtn");
+        const banJuaModal = document.getElementById("banJuaModal");
+        const closeBanJuaModalBtn = document.getElementById("closeBanJuaModalBtn");
+        const banJuaChecklist = document.getElementById("banJuaChecklist");
+        const modalSelectedCount = document.getElementById("modalSelectedCount");
+        const btnBanJuaSelectDefault = document.getElementById("btnBanJuaSelectDefault");
+        const btnBanJuaSelectAll = document.getElementById("btnBanJuaSelectAll");
+        const btnSaveBanJuaConfig = document.getElementById("btnSaveBanJuaConfig");
+
+        const cardsGrid = document.getElementById("cardsGrid");
+        const tableViewContainer = document.getElementById("tableViewContainer");
+        const summaryTableBody = document.getElementById("summaryTableBody");
+        const emptyState = document.getElementById("emptyState");
+        const resultCount = document.getElementById("resultCount");
+        const smartSearch = document.getElementById("smartSearch");
+        const clearSearchBtn = document.getElementById("clearSearchBtn");
+        const filterTabs = document.getElementById("filterTabs");
+        const resetFilterBtn = document.getElementById("resetFilterBtn");
+
+        const btnViewCards = document.getElementById("btnViewCards");
+        const btnViewTable = document.getElementById("btnViewTable");
+
+        const refModal = document.getElementById("refModal");
+        const openRefModalBtn = document.getElementById("openRefModalBtn");
+        const closeRefModalBtn = document.getElementById("closeRefModalBtn");
+        const modalSearchInput = document.getElementById("modalSearchInput");
+        const refTableBody = document.getElementById("refTableBody");
+
+        const toast = document.getElementById("toast");
+        const toastMsg = document.getElementById("toastMsg");
+        let toastTimer = null;
+
+        /* ==========================================================================
+           3. Helper Functions (Clipboard & Toast)
+           ========================================================================== */
+        function copyToClipboard(text) {
+            const tempInput = document.createElement("textarea");
+            tempInput.value = text;
+            tempInput.style.position = "fixed";
+            tempInput.style.left = "-9999px";
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                showToast(`คัดลอกรหัส "${text}" แล้ว`);
+            } catch (err) {
+                showToast(`รหัส: ${text}`);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function showToast(message) {
+            toastMsg.textContent = message;
+            toast.classList.add("show");
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2200);
+        }
+
+        /* ==========================================================================
+           4. Unit Converter & Course Calculator Logic
+           ========================================================================== */
+        function buildConverterHTML(herb) {
+            const hasMultipleVariants = herb.variants.length > 1;
+            const firstVar = herb.variants[0];
+
+            // สร้างตัวเลือกสูตร/รูปแบบย่อย (ถ้ามีหลายรายการย่อย)
+            const variantSelector = hasMultipleVariants
+                ? `<select class="conv-select" id="var-sel-${herb.no}" onchange="onVariantChange(${herb.no})">
+                    ${herb.variants.map((v, idx) => `<option value="${idx}">${v.form}</option>`).join("")}
+                   </select>`
+                : `<span style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">${firstVar.form}</span>`;
+
+            // กำหนดช่องกรอกความแรง/ขนาดบรรจุเริ่มต้น
+            let inputSection = "";
+            if (firstVar.unitType === "mg") {
+                inputSection = `
+                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">ความแรง/เม็ด:</label>
+                    <input type="number" id="str-in-${herb.no}" class="conv-input" value="${firstVar.defaultStrength}" min="1" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;" id="str-unit-${herb.no}">มก.</span>
+                    <label for="qty-in-${herb.no}" style="font-size:0.8rem; margin-left:4px;">จ่ายจริง:</label>
+                    <input type="number" id="qty-in-${herb.no}" class="conv-input" placeholder="จำนวน" min="0" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;" id="qty-unit-${herb.no}">${firstVar.unitLabel}</span>
+                `;
+            } else if (firstVar.unitType === "ml") {
+                inputSection = `
+                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">ขนาดขวด:</label>
+                    <input type="number" id="str-in-${herb.no}" class="conv-input" value="${firstVar.defaultStrength}" min="1" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;" id="str-unit-${herb.no}">มล.</span>
+                    <label for="qty-in-${herb.no}" style="font-size:0.8rem; margin-left:4px;">จ่ายจริง:</label>
+                    <input type="number" id="qty-in-${herb.no}" class="conv-input" placeholder="จำนวน" min="0" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;" id="qty-unit-${herb.no}">${firstVar.unitLabel}</span>
+                `;
+            } else {
+                inputSection = `
+                    <input type="hidden" id="str-in-${herb.no}" value="1">
+                    <label for="qty-in-${herb.no}" style="font-size:0.8rem;">จำนวนที่จ่ายจริง:</label>
+                    <input type="number" id="qty-in-${herb.no}" class="conv-input" placeholder="0" min="0" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;" id="qty-unit-${herb.no}">${firstVar.unitLabel}</span>
+                `;
+            }
+
+            return `
+                <div class="converter-box">
+                    <div class="converter-header">
+                        <span>🧮 คำนวณปริมาณจ่ายต่อ Course (ต่ำสุด - สูงสุด)</span>
+                        <span style="font-size:0.74rem; color:var(--secondary);">รอบเบิก: ${firstVar.cycle}</span>
+                    </div>
+                    <div class="converter-controls" id="conv-ctrl-${herb.no}">
+                        ${variantSelector}
+                        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:5px; width:100%; margin-top:4px;" id="conv-inputs-${herb.no}">
+                            ${inputSection}
+                        </div>
+                    </div>
+                    <div class="conv-result" id="conv-res-${herb.no}">
+                        ${getInitialRangeHint(firstVar)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getInitialRangeHint(v) {
+            if (v.unitType === "mg") {
+                const minUnits = Math.ceil(v.minVal / v.defaultStrength);
+                const maxUnits = Math.floor(v.maxVal / v.defaultStrength);
+                return `เกณฑ์ Course (${v.minText} - ${v.maxText}): หากใช้ขนาด ${v.defaultStrength} มก. ต้องจ่าย <strong>${minUnits} - ${maxUnits} ${v.unitLabel}</strong> (ชดเชย ${v.rate})`;
+            } else if (v.unitType === "ml") {
+                const minUnits = Math.ceil(v.minVal / v.defaultStrength);
+                const maxUnits = Math.floor(v.maxVal / v.defaultStrength);
+                const minTbsp = Math.round(v.minVal / 15);
+                const maxTbsp = Math.round(v.maxVal / 15);
+                return `เกณฑ์ Course (${v.minText} - ${v.maxText} ≈ ${minTbsp}-${maxTbsp} ช้อนโต๊ะ): ขนาด ${v.defaultStrength} มล./ขวด จ่าย <strong>${minUnits} - ${maxUnits} ขวด</strong>`;
+            } else {
+                return `เกณฑ์เบิกจ่ายต่อ Course: <strong>${v.minText}</strong> ถึง <strong>${v.maxText}</strong> (อัตราชดเชย ${v.rate})`;
+            }
+        }
+
+        function onVariantChange(herbNo) {
+            const herb = HERBS_32_DATA.find(h => h.no === herbNo);
+            const sel = document.getElementById(`var-sel-${herbNo}`);
+            const v = herb.variants[parseInt(sel.value, 10)];
+            const inputsContainer = document.getElementById(`conv-inputs-${herbNo}`);
+            const resBox = document.getElementById(`conv-res-${herbNo}`);
+
+            if (v.unitType === "mg") {
+                inputsContainer.innerHTML = `
+                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">ความแรง/เม็ด:</label>
+                    <input type="number" id="str-in-${herb.no}" class="conv-input" value="${v.defaultStrength}" min="1" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;">มก.</span>
+                    <label for="qty-in-${herb.no}" style="font-size:0.8rem; margin-left:4px;">จ่ายจริง:</label>
+                    <input type="number" id="qty-in-${herb.no}" class="conv-input" placeholder="จำนวน" min="0" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;">${v.unitLabel}</span>
+                `;
+            } else if (v.unitType === "ml") {
+                inputsContainer.innerHTML = `
+                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">ขนาดขวด:</label>
+                    <input type="number" id="str-in-${herb.no}" class="conv-input" value="${v.defaultStrength}" min="1" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;">มล.</span>
+                    <label for="qty-in-${herb.no}" style="font-size:0.8rem; margin-left:4px;">จ่ายจริง:</label>
+                    <input type="number" id="qty-in-${herb.no}" class="conv-input" placeholder="จำนวน" min="0" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;">${v.unitLabel}</span>
+                `;
+            } else {
+                inputsContainer.innerHTML = `
+                    <input type="hidden" id="str-in-${herb.no}" value="1">
+                    <label for="qty-in-${herb.no}" style="font-size:0.8rem;">จำนวนที่จ่ายจริง:</label>
+                    <input type="number" id="qty-in-${herb.no}" class="conv-input" placeholder="0" min="0" oninput="updateCourseCalc(${herb.no})">
+                    <span style="font-size:0.8rem;">${v.unitLabel}</span>
+                `;
+            }
+
+            resBox.className = "conv-result";
+            resBox.innerHTML = getInitialRangeHint(v);
+        }
+
+        function updateCourseCalc(herbNo) {
+            const herb = HERBS_32_DATA.find(h => h.no === herbNo);
+            const sel = document.getElementById(`var-sel-${herbNo}`);
+            const v = sel ? herb.variants[parseInt(sel.value, 10)] : herb.variants[0];
+
+            const strength = parseFloat(document.getElementById(`str-in-${herbNo}`).value) || 0;
+            const qty = parseFloat(document.getElementById(`qty-in-${herbNo}`).value);
+            const resBox = document.getElementById(`conv-res-${herbNo}`);
+
+            if (strength <= 0) {
+                resBox.className = "conv-result status-warn";
+                resBox.textContent = "กรุณาระบุความแรง/ขนาดบรรจุมากกว่า 0";
+                return;
+            }
+
+            // คำนวณช่วงจำนวนหน่วยที่แนะนำตามความแรงที่กรอก
+            let minUnits = v.minVal;
+            let maxUnits = v.maxVal;
+            if (v.unitType === "mg" || v.unitType === "ml") {
+                minUnits = Math.ceil(v.minVal / strength);
+                maxUnits = Math.floor(v.maxVal / strength);
+            }
+
+            if (isNaN(qty) || qty <= 0) {
+                resBox.className = "conv-result";
+                if (v.unitType === "mg" || v.unitType === "ml") {
+                    const unitWord = v.unitType === "mg" ? "มก." : "มล.";
+                    resBox.innerHTML = `ขนาด ${strength} ${unitWord}/${v.unitLabel} → จ่ายได้ <strong>${minUnits} - ${maxUnits} ${v.unitLabel}</strong> (${v.minText} - ${v.maxText})`;
+                } else {
+                    resBox.innerHTML = getInitialRangeHint(v);
+                }
+                return;
+            }
+
+            const totalAmount = qty * strength;
+            const unitSuffix = v.unitType === "mg" ? " มก." : (v.unitType === "ml" ? " มล." : ` ${v.unitLabel}`);
+
+            if (totalAmount < v.minVal) {
+                resBox.className = "conv-result status-warn";
+                resBox.innerHTML = `⚠️ ต่ำกว่าเกณฑ์ขั้นต่ำ! (รวม ${totalAmount.toLocaleString()}${unitSuffix} | ขั้นต่ำ ${v.minText} หรือ ≥ ${minUnits} ${v.unitLabel})`;
+            } else if (totalAmount > v.maxVal) {
+                resBox.className = "conv-result status-warn";
+                resBox.innerHTML = `⚠️ เกินเพดานสูงสุดต่อ Course! (รวม ${totalAmount.toLocaleString()}${unitSuffix} | สูงสุด ${v.maxText} หรือ ≤ ${maxUnits} ${v.unitLabel})`;
+            } else {
+                resBox.className = "conv-result status-ok";
+                resBox.innerHTML = `✅ อยู่ในเกณฑ์เบิก Course (รวม ${totalAmount.toLocaleString()}${unitSuffix}) • ชดเชย <strong>${v.rate}</strong> / รอบ ${v.cycle}`;
+            }
+        }
+
+        /* ==========================================================================
+           5. Render Cards & Summary Table
+           ========================================================================== */
+        function getFilteredHerbs() {
+            const query = currentSearch.trim().toLowerCase();
+
+            return HERBS_32_DATA.filter(herb => {
+                if (onlyBanJua && !banJuaHerbIds.includes(herb.no)) return false;
+
+                const matchGroup = currentGroup === "all" || herb.groups.includes(currentGroup);
+                if (!matchGroup) return false;
+
+                if (!query) return true;
+
+                const variantsText = herb.variants.map(v => `${v.form} ${v.rate} ${v.cycle} ${v.minText} ${v.maxText}`).join(" ");
+                const searchableText = [
+                    `ลำดับ ${herb.no}`,
+                    herb.no,
+                    herb.name,
+                    herb.groupLabels.join(" "),
+                    herb.replaces,
+                    variantsText,
+                    herb.indication,
+                    herb.keywords,
+                    ...herb.icdTM,
+                    ...herb.icdModern
+                ].join(" ").toLowerCase();
+
+                return searchableText.includes(query);
+            });
+        }
+
+        function renderAll() {
+            banJuaCountBadge.textContent = banJuaHerbIds.length;
+            const filtered = getFilteredHerbs();
+            const totalBase = onlyBanJua ? banJuaHerbIds.length : HERBS_32_DATA.length;
+            resultCount.textContent = onlyBanJua
+                ? `รพ.สต.บ้านจัวเหนือ: แสดง ${filtered.length} จาก ${totalBase} รายการ`
+                : `แสดง ${filtered.length} จาก ${HERBS_32_DATA.length} รายการ`;
+
+            if (filtered.length === 0) {
+                cardsGrid.innerHTML = "";
+                summaryTableBody.innerHTML = "";
+                emptyState.classList.add("visible");
+                return;
+            }
+
+            emptyState.classList.remove("visible");
+
+            // 1. Render Cards
+            cardsGrid.innerHTML = filtered.map(herb => {
+                const primaryRate = herb.variants.length === 1
+                    ? herb.variants[0].rate
+                    : `${herb.variants.length} รูปแบบ`;
+
+                const variantsRows = herb.variants.map(v => `
+                    <tr>
+                        <td><strong>${v.form}</strong></td>
+                        <td><span class="rate-pill">${v.rate}</span></td>
+                        <td><span class="cycle-pill">${v.cycle}</span></td>
+                        <td style="white-space:nowrap;">${v.minText} – ${v.maxText}</td>
+                    </tr>
+                `).join("");
+
+                const groupBadges = herb.groupLabels.map(gl => `<span class="group-tag">${gl}</span>`).join("");
+                const isBanJuaItem = banJuaHerbIds.includes(herb.no);
+                const banJuaTag = isBanJuaItem ? `<span class="banjua-badge">🏥 รพ.สต.บ้านจัวเหนือ</span>` : "";
+
+                const tmChips = herb.icdTM.map(c => `<span class="icd-chip tm" onclick="copyToClipboard('${c}')" title="คลิกเพื่อคัดลอก">${c}</span>`).join("");
+                const modChips = herb.icdModern.map(c => `<span class="icd-chip modern" onclick="copyToClipboard('${c}')" title="คลิกเพื่อคัดลอก">${c}</span>`).join("");
+
+                return `
+                <article class="herb-card">
+                    <div class="card-header">
+                        <div>
+                            <div class="badge-row">
+                                <span class="herb-no-badge">ลำดับที่ ${herb.no}</span>
+                                ${banJuaTag}
+                                ${groupBadges}
+                            </div>
+                            <h2 class="herb-title">${herb.name}</h2>
+                            <div class="herb-replaces">ทดแทน: <strong>${herb.replaces}</strong></div>
+                        </div>
+                        <div class="course-rate-badge">
+                            <span>อัตราจ่าย/Course</span>
+                            <strong>${primaryRate}</strong>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Variants & Course Limits Table -->
+                        <div class="variants-box">
+                            <table class="variants-table">
+                                <thead>
+                                    <tr>
+                                        <th>รูปแบบ / สูตรตำรับ</th>
+                                        <th>สปสช.ชดเชย</th>
+                                        <th>รอบเบิก</th>
+                                        <th>ต่ำสุด - สูงสุด</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${variantsRows}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Interactive Course Calculator -->
+                        ${buildConverterHTML(herb)}
+
+                        <!-- Clinical Info -->
+                        <div class="info-block">
+                            <div class="info-label">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                                สรรพคุณและวิธีใช้
+                            </div>
+                            <div class="info-text">${herb.indication} • ${herb.dosage}</div>
+                        </div>
+
+                        <div class="warning-box">
+                            <div class="warning-title">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                ข้อควรระวัง / ข้อห้ามใช้
+                            </div>
+                            <div>${herb.warning}</div>
+                        </div>
+
+                        <!-- ICD Codes -->
+                        <div class="icd-section">
+                            <div class="icd-group">
+                                <span class="icd-group-label">ICD-10-TM แพทย์แผนไทย (คลิกคัดลอก):</span>
+                                <div class="icd-chips">${tmChips}</div>
+                            </div>
+                            <div class="icd-group">
+                                <span class="icd-group-label">ICD-10 แพทย์แผนปัจจุบัน (คลิกคัดลอก):</span>
+                                <div class="icd-chips">${modChips}</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                `;
+            }).join("");
+
+            // 2. Render Quick Reference Table (32 Items)
+            summaryTableBody.innerHTML = filtered.map(herb => {
+                const variantDetails = herb.variants.map(v => `
+                    <div style="margin-bottom:4px;">• <strong>${v.form}</strong></div>
+                `).join("");
+                const rateDetails = herb.variants.map(v => `
+                    <div style="margin-bottom:4px;"><span class="rate-pill">${v.rate}</span></div>
+                `).join("");
+                const cycleDetails = herb.variants.map(v => `
+                    <div style="margin-bottom:4px;"><span class="cycle-pill">${v.cycle}</span></div>
+                `).join("");
+                const rangeDetails = herb.variants.map(v => `
+                    <div style="margin-bottom:4px;">${v.minText} – <strong>${v.maxText}</strong></div>
+                `).join("");
+
+                const modChips = herb.icdModern.slice(0, 5).map(c => `<span class="icd-chip modern" onclick="copyToClipboard('${c}')">${c}</span>`).join(" ");
+                const banJuaTableBadge = banJuaHerbIds.includes(herb.no) ? `<div style="margin-top:4px;"><span class="banjua-badge">🏥 รพ.สต.บ้านจัวเหนือ</span></div>` : "";
+
+                return `
+                    <tr>
+                        <td style="text-align:center; font-weight:800; color:var(--primary);">${herb.no}</td>
+                        <td>
+                            <div style="font-weight:700; color:var(--primary); font-size:0.95rem; margin-bottom:4px;">${herb.name}</div>
+                            ${variantDetails}
+                            ${banJuaTableBadge}
+                        </td>
+                        <td>${rateDetails}</td>
+                        <td>${cycleDetails}</td>
+                        <td>${rangeDetails}</td>
+                        <td>
+                            <div style="font-size:0.78rem; color:var(--text-muted); margin-bottom:4px;">${herb.groupLabels.join(", ")}</div>
+                            <div class="icd-chips">${modChips}</div>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        /* ==========================================================================
+           6. Render 10 Disease Groups Modal Table
+           ========================================================================== */
+        function renderTenGroupsTable(filterText = "") {
+            const q = filterText.trim().toLowerCase();
+            const filtered = TEN_GROUPS_DATA.filter(row => {
+                if (!q) return true;
+                const combined = [
+                    row.no,
+                    row.group,
+                    ...row.icdTM,
+                    ...row.icdModern,
+                    row.herbs
+                ].join(" ").toLowerCase();
+                return combined.includes(q);
+            });
+
+            if (filtered.length === 0) {
+                refTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 24px; color: var(--text-light);">ไม่พบข้อมูลที่ตรงกับคำค้นหา</td></tr>`;
+                return;
+            }
+
+            refTableBody.innerHTML = filtered.map(row => {
+                const tmChips = row.icdTM.map(c => `<span class="icd-chip tm" onclick="copyToClipboard('${c}')">${c}</span>`).join(" ");
+                const modChips = row.icdModern.map(c => `<span class="icd-chip modern" onclick="copyToClipboard('${c}')">${c}</span>`).join(" ");
+                return `
+                    <tr>
+                        <td style="text-align: center; font-weight: 700;">${row.no}</td>
+                        <td style="font-weight: 700; color: var(--primary);">${row.group}</td>
+                        <td><div class="icd-chips">${tmChips}</div></td>
+                        <td><div class="icd-chips">${modChips}</div></td>
+                        <td style="color: var(--text-main);">${row.herbs}</td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        /* ==========================================================================
+           7. Event Listeners & View Switching
+           ========================================================================== */
+        function saveBanJuaList() {
+            try {
+                localStorage.setItem("banjua_herbs_32_v3", JSON.stringify(banJuaHerbIds));
+            } catch (e) {}
+            banJuaCountBadge.textContent = banJuaHerbIds.length;
+            modalSelectedCount.textContent = banJuaHerbIds.length;
+        }
+
+        function renderBanJuaChecklist() {
+            modalSelectedCount.textContent = banJuaHerbIds.length;
+            banJuaChecklist.innerHTML = HERBS_32_DATA.map(herb => {
+                const checked = banJuaHerbIds.includes(herb.no) ? "checked" : "";
+                return `
+                    <label class="banjua-check-item">
+                        <input type="checkbox" value="${herb.no}" ${checked} onchange="toggleBanJuaHerb(${herb.no}, this.checked)">
+                        <span><strong>${herb.no}.</strong> ${herb.name}</span>
+                    </label>
+                `;
+            }).join("");
+        }
+
+        function toggleBanJuaHerb(herbNo, isChecked) {
+            if (isChecked) {
+                if (!banJuaHerbIds.includes(herbNo)) {
+                    banJuaHerbIds.push(herbNo);
+                    banJuaHerbIds.sort((a, b) => a - b);
+                }
+            } else {
+                banJuaHerbIds = banJuaHerbIds.filter(id => id !== herbNo);
+            }
+            saveBanJuaList();
+            renderAll();
+        }
+
+        btnBanJuaNuea.addEventListener("click", () => {
+            onlyBanJua = !onlyBanJua;
+            btnBanJuaNuea.classList.toggle("active-banjua", onlyBanJua);
+            banJuaBanner.classList.toggle("active", onlyBanJua);
+            renderAll();
+            showToast(onlyBanJua ? "แสดงเฉพาะรายการยา รพ.สต.บ้านจัวเหนือ" : "แสดงรายการยาสมุนไพรทั้งหมด 32 รายการ");
+        });
+
+        exitBanJuaBtn.addEventListener("click", () => {
+            onlyBanJua = false;
+            btnBanJuaNuea.classList.remove("active-banjua");
+            banJuaBanner.classList.remove("active");
+            renderAll();
+        });
+
+        openBanJuaConfigBtn.addEventListener("click", () => {
+            renderBanJuaChecklist();
+            banJuaModal.classList.add("open");
+        });
+
+        closeBanJuaModalBtn.addEventListener("click", () => {
+            banJuaModal.classList.remove("open");
+        });
+
+        btnSaveBanJuaConfig.addEventListener("click", () => {
+            saveBanJuaList();
+            banJuaModal.classList.remove("open");
+            renderAll();
+            showToast(`บันทึกรายการยา รพ.สต.บ้านจัวเหนือ (${banJuaHerbIds.length} รายการ) แล้ว`);
+        });
+
+        btnBanJuaSelectDefault.addEventListener("click", () => {
+            banJuaHerbIds = [...DEFAULT_BANJUA_IDS];
+            saveBanJuaList();
+            renderBanJuaChecklist();
+            renderAll();
+        });
+
+        btnBanJuaSelectAll.addEventListener("click", () => {
+            banJuaHerbIds = HERBS_32_DATA.map(h => h.no);
+            saveBanJuaList();
+            renderBanJuaChecklist();
+            renderAll();
+        });
+
+        banJuaModal.addEventListener("click", (e) => {
+            if (e.target === banJuaModal) {
+                banJuaModal.classList.remove("open");
+            }
+        });
+
+        smartSearch.addEventListener("input", (e) => {
+            currentSearch = e.target.value;
+            clearSearchBtn.classList.toggle("visible", currentSearch.length > 0);
+            renderAll();
+        });
+
+        clearSearchBtn.addEventListener("click", () => {
+            smartSearch.value = "";
+            currentSearch = "";
+            clearSearchBtn.classList.remove("visible");
+            smartSearch.focus();
+            renderAll();
+        });
+
+        filterTabs.addEventListener("click", (e) => {
+            const btn = e.target.closest(".tab-btn");
+            if (!btn) return;
+
+            document.querySelectorAll("#filterTabs .tab-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentGroup = btn.dataset.group;
+            renderAll();
+        });
+
+        resetFilterBtn.addEventListener("click", () => {
+            smartSearch.value = "";
+            currentSearch = "";
+            clearSearchBtn.classList.remove("visible");
+            onlyBanJua = false;
+            btnBanJuaNuea.classList.remove("active-banjua");
+            banJuaBanner.classList.remove("active");
+            currentGroup = "all";
+            document.querySelectorAll("#filterTabs .tab-btn").forEach(b => {
+                b.classList.toggle("active", b.dataset.group === "all");
+            });
+            renderAll();
+        });
+
+        // Switch between Card View and Quick Reference Table View
+        btnViewCards.addEventListener("click", () => {
+            currentView = "cards";
+            btnViewCards.classList.add("active-view");
+            btnViewTable.classList.remove("active-view");
+            cardsGrid.style.display = "grid";
+            tableViewContainer.classList.remove("active");
+        });
+
+        btnViewTable.addEventListener("click", () => {
+            currentView = "table";
+            btnViewTable.classList.add("active-view");
+            btnViewCards.classList.remove("active-view");
+            cardsGrid.style.display = "none";
+            tableViewContainer.classList.add("active");
+        });
+
+        // Modal Controls
+        openRefModalBtn.addEventListener("click", () => {
+            refModal.classList.add("open");
+            modalSearchInput.value = "";
+            renderTenGroupsTable("");
+            setTimeout(() => modalSearchInput.focus(), 50);
+        });
+
+        closeRefModalBtn.addEventListener("click", () => {
+            refModal.classList.remove("open");
+        });
+
+        refModal.addEventListener("click", (e) => {
+            if (e.target === refModal) {
+                refModal.classList.remove("open");
+            }
+        });
+
+        modalSearchInput.addEventListener("input", (e) => {
+            renderTenGroupsTable(e.target.value);
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                if (refModal.classList.contains("open")) refModal.classList.remove("open");
+                if (banJuaModal.classList.contains("open")) banJuaModal.classList.remove("open");
+            }
+        });
+
+        // Initial Render
+        renderAll();
+    </script>
+</body>
+</html>
