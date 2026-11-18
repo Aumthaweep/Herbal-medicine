@@ -603,7 +603,8 @@
         }
 
         .conv-select {
-            max-width: 185px;
+            max-width: 100%;
+            width: 100%;
         }
 
         .conv-input {
@@ -1287,14 +1288,15 @@
                 groupLabels: ["2. ไข้หวัด ไอ เสมหะ โควิด-19"],
                 replaces: "ยาบรรเทาอาการไอ ขับเสมหะ",
                 variants: [
-                    { form: "ยาประสะมะแว้ง (ลูกกลอน/เม็ด)", rate: "50 บาท", cycle: "7 วัน", minText: "14,000 มก.", maxText: "19,600 มก.", unitType: "mg", minVal: 14000, maxVal: 19600, defaultStrength: 200, unitLabel: "เม็ด" }
+                    { form: "ยาอมมะแว้ง เม็ด 200 มก. (20 เม็ด/ซอง)", rate: "50 บาท", cycle: "7 วัน", minText: "14,000 มก. (3.5 ซอง)", maxText: "19,600 มก. (4.9 ซอง)", unitType: "mg", minVal: 14000, maxVal: 19600, defaultStrength: 4000, unitLabel: "ซอง (20 เม็ด)", subNote: "จ่ายจริง 4 ซอง (80 เม็ด = 16,000 มก.) อยู่ในเกณฑ์เบิก Course" },
+                    { form: "ยาประสะมะแว้ง (ลูกกลอน/เม็ด 200 มก.)", rate: "50 บาท", cycle: "7 วัน", minText: "14,000 มก. (70 เม็ด)", maxText: "19,600 มก. (98 เม็ด)", unitType: "mg", minVal: 14000, maxVal: 19600, defaultStrength: 200, unitLabel: "เม็ด" }
                 ],
                 indication: "บรรเทาอาการไอ มีเสมหะ ทำให้ชุ่มคอ และช่วยขับเสมหะ",
-                dosage: "อมครั้งละ 3-5 เม็ด (ขนาด 200 มก.) เมื่อมีอาการไอ หรือมีเสมหะ",
+                dosage: "อมครั้งละ 3-5 เม็ด (ยาอมมะแว้ง เม็ด 200 มก.) เมื่อมีอาการไอ หรือมีเสมหะ • กรณีบรรจุ 20 เม็ด/ซอง (4,000 มก./ซอง) แนะนำจ่าย <strong>4 ซอง (80 เม็ด = 16,000 มก.)</strong> เพื่อให้อยู่ในเกณฑ์ 14,000 - 19,600 มก. (3.5 - 4.9 ซอง)",
                 warning: "ผู้ที่แพ้สมุนไพรที่เป็นส่วนประกอบของยา และไม่ควรใช้นานเกิน 15 วัน หากไม่ดีขึ้นควรปรึกษาแพทย์แผนไทย",
                 icdTM: ["U64.3", "U58.31", "U59.31"],
                 icdModern: ["J02.9", "J02.8", "J02.0", "J00", "R05"],
-                keywords: "8 ประสะมะแว้ง มะแว้ง ลูกกลอน ไอ เสมหะ ชุ่มคอ"
+                keywords: "8 ประสะมะแว้ง ยาอมมะแว้ง เม็ดยาอมมะแว้ง มะแว้ง ลูกกลอน 200 มก. 20 เม็ด/ซอง ซอง ไอ เสมหะ ชุ่มคอ"
             },
             {
                 no: 9,
@@ -1862,8 +1864,9 @@
             // กำหนดช่องกรอกความแรง/ขนาดบรรจุเริ่มต้น
             let inputSection = "";
             if (firstVar.unitType === "mg") {
+                const strengthLabel = firstVar.unitLabel.startsWith("ซอง") ? "ขนาด/ซอง:" : "ความแรง/เม็ด:";
                 inputSection = `
-                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">ความแรง/เม็ด:</label>
+                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">${strengthLabel}</label>
                     <input type="number" id="str-in-${herb.no}" class="conv-input" value="${firstVar.defaultStrength}" min="1" oninput="updateCourseCalc(${herb.no})">
                     <span style="font-size:0.8rem;" id="str-unit-${herb.no}">มก.</span>
                     <label for="qty-in-${herb.no}" style="font-size:0.8rem; margin-left:4px;">จ่ายจริง:</label>
@@ -1892,7 +1895,7 @@
                 <div class="converter-box">
                     <div class="converter-header">
                         <span>🧮 คำนวณปริมาณจ่ายต่อ Course (ต่ำสุด - สูงสุด)</span>
-                        <span style="font-size:0.74rem; color:var(--secondary);">รอบเบิก: ${firstVar.cycle}</span>
+                        <span style="font-size:0.74rem; color:var(--secondary);" id="conv-cycle-${herb.no}">รอบเบิก: ${firstVar.cycle}</span>
                     </div>
                     <div class="converter-controls" id="conv-ctrl-${herb.no}">
                         ${variantSelector}
@@ -1909,6 +1912,12 @@
 
         function getInitialRangeHint(v) {
             if (v.unitType === "mg") {
+                if (v.subNote) {
+                    const exactMin = Number((v.minVal / v.defaultStrength).toFixed(2));
+                    const exactMax = Number((v.maxVal / v.defaultStrength).toFixed(2));
+                    const wholeUnits = Math.ceil(v.minVal / v.defaultStrength);
+                    return `เกณฑ์ Course (${v.minText} - ${v.maxText} | คิดเป็น ${exactMin} - ${exactMax} ${v.unitLabel}): แนะนำจ่ายเต็มจำนวน <strong>${wholeUnits} ${v.unitLabel}</strong> (${(wholeUnits * v.defaultStrength).toLocaleString()} มก.) • ชดเชย ${v.rate}`;
+                }
                 const minUnits = Math.ceil(v.minVal / v.defaultStrength);
                 const maxUnits = Math.floor(v.maxVal / v.defaultStrength);
                 return `เกณฑ์ Course (${v.minText} - ${v.maxText}): หากใช้ขนาด ${v.defaultStrength} มก. ต้องจ่าย <strong>${minUnits} - ${maxUnits} ${v.unitLabel}</strong> (ชดเชย ${v.rate})`;
@@ -1929,10 +1938,16 @@
             const v = herb.variants[parseInt(sel.value, 10)];
             const inputsContainer = document.getElementById(`conv-inputs-${herbNo}`);
             const resBox = document.getElementById(`conv-res-${herbNo}`);
+            const cycleEl = document.getElementById(`conv-cycle-${herbNo}`);
+
+            if (cycleEl) {
+                cycleEl.textContent = `รอบเบิก: ${v.cycle}`;
+            }
 
             if (v.unitType === "mg") {
+                const strengthLabel = v.unitLabel.startsWith("ซอง") ? "ขนาด/ซอง:" : "ความแรง/เม็ด:";
                 inputsContainer.innerHTML = `
-                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">ความแรง/เม็ด:</label>
+                    <label for="str-in-${herb.no}" style="font-size:0.8rem;">${strengthLabel}</label>
                     <input type="number" id="str-in-${herb.no}" class="conv-input" value="${v.defaultStrength}" min="1" oninput="updateCourseCalc(${herb.no})">
                     <span style="font-size:0.8rem;">มก.</span>
                     <label for="qty-in-${herb.no}" style="font-size:0.8rem; margin-left:4px;">จ่ายจริง:</label>
@@ -1987,6 +2002,10 @@
             if (isNaN(qty) || qty <= 0) {
                 resBox.className = "conv-result";
                 if (v.unitType === "mg" || v.unitType === "ml") {
+                    if (v.subNote) {
+                        resBox.innerHTML = getInitialRangeHint(v);
+                        return;
+                    }
                     const unitWord = v.unitType === "mg" ? "มก." : "มล.";
                     resBox.innerHTML = `ขนาด ${strength} ${unitWord}/${v.unitLabel} → จ่ายได้ <strong>${minUnits} - ${maxUnits} ${v.unitLabel}</strong> (${v.minText} - ${v.maxText})`;
                 } else {
@@ -1997,16 +2016,17 @@
 
             const totalAmount = qty * strength;
             const unitSuffix = v.unitType === "mg" ? " มก." : (v.unitType === "ml" ? " มล." : ` ${v.unitLabel}`);
+            const extraPackInfo = (v.subNote && strength === 4000) ? ` หรือ ${qty * 20} เม็ด` : "";
 
             if (totalAmount < v.minVal) {
                 resBox.className = "conv-result status-warn";
-                resBox.innerHTML = `⚠️ ต่ำกว่าเกณฑ์ขั้นต่ำ! (รวม ${totalAmount.toLocaleString()}${unitSuffix} | ขั้นต่ำ ${v.minText} หรือ ≥ ${minUnits} ${v.unitLabel})`;
+                resBox.innerHTML = `⚠️ ต่ำกว่าเกณฑ์ขั้นต่ำ! (รวม ${totalAmount.toLocaleString()}${unitSuffix}${extraPackInfo} | ขั้นต่ำ ${v.minText} หรือ ≥ ${minUnits} ${v.unitLabel})`;
             } else if (totalAmount > v.maxVal) {
                 resBox.className = "conv-result status-warn";
-                resBox.innerHTML = `⚠️ เกินเพดานสูงสุดต่อ Course! (รวม ${totalAmount.toLocaleString()}${unitSuffix} | สูงสุด ${v.maxText} หรือ ≤ ${maxUnits} ${v.unitLabel})`;
+                resBox.innerHTML = `⚠️ เกินเพดานสูงสุดต่อ Course! (รวม ${totalAmount.toLocaleString()}${unitSuffix}${extraPackInfo} | สูงสุด ${v.maxText} หรือ ≤ ${maxUnits} ${v.unitLabel})`;
             } else {
                 resBox.className = "conv-result status-ok";
-                resBox.innerHTML = `✅ อยู่ในเกณฑ์เบิก Course (รวม ${totalAmount.toLocaleString()}${unitSuffix}) • ชดเชย <strong>${v.rate}</strong> / รอบ ${v.cycle}`;
+                resBox.innerHTML = `✅ อยู่ในเกณฑ์เบิก Course (รวม ${totalAmount.toLocaleString()}${unitSuffix}${extraPackInfo}) • ชดเชย <strong>${v.rate}</strong> / รอบ ${v.cycle}`;
             }
         }
 
